@@ -2,4 +2,4 @@ vendor/*
 *.pfx
 /vendor/
 /composer.lock
-/.data/
+# /.data/

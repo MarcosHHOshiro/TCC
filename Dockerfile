@@ -3,6 +3,9 @@ FROM php:8.3-apache
 
 # EXPOSE 80:80
 
+# ServerName para evitar o aviso
+RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
+
 # Instale as dependências necessárias para o PDO_PGSQL
 RUN apt-get update && apt-get install -y \
     libpq-dev \

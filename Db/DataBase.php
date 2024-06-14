@@ -69,6 +69,13 @@ class DataBase
         $this->setConnection();
     }
 
+    public function setTable(string $table): self
+    {
+        $this->table = $table;
+
+        return $this;
+    }
+
     private function setConnection()
     {
         try {

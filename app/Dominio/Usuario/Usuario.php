@@ -13,6 +13,7 @@ class Usuario{
     private $sexo;
     private $id_cidade;
     private $senha;
+    private $login;
     private $nivel_acesso;
     private $status_usuario;
 
@@ -211,6 +212,21 @@ class Usuario{
     {
         $this->status_usuario = $status_usuario;
 
+        return $this;
+    }
+
+    /**
+     * Get the value of login
+     */
+    public function getLogin() {
+        return $this->login;
+    }
+
+    /**
+     * Set the value of login
+     */
+    public function setLogin($login): self {
+        $this->login = $login;
         return $this;
     }
 }

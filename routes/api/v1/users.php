@@ -4,7 +4,7 @@ namespace Routes\api\v1;
 use Http\Response;
 use \App\Controller\Usuario;
 
-$obRouter->get('/api/v1/users', [
+$obRouter->post('/api/v1/users', [
     'rolePermissao' => [
         '',
     ],
@@ -14,6 +14,6 @@ $obRouter->get('/api/v1/users', [
     ],
     function ($request)
     {
-        return new Response(200, Usuario::teste($request), 'application/json');
+        return new Response(200, Usuario::cadastroUsuario($request), 'application/json');
     }
 ]);
