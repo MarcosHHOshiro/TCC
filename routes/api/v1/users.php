@@ -17,3 +17,121 @@ $obRouter->post('/api/v1/users', [
         return new Response(200, Usuario::cadastroUsuario($request), 'application/json');
     }
 ]);
+
+$obRouter->get('/api/v1/users', [
+    'rolePermissao' => [
+        '',
+    ],
+    'middlewares' => [
+        // 'jwt-auth'
+        // 'cache'  
+    ],
+    function ($request)
+    {
+        return new Response(200, Usuario::consultaUsuario($request), 'application/json');
+    }
+]);
+
+/**
+ * Profissao
+ */
+$obRouter->get('/api/v1/users/profissao', [
+    'rolePermissao' => [
+        '',
+    ],
+    'middlewares' => [
+        // 'jwt-auth'
+        // 'cache'  
+    ],
+    function ($request)
+    {
+        return new Response(200, Usuario::consultaProfissao($request), 'application/json');
+    }
+]);
+
+$obRouter->post('/api/v1/users/profissao', [
+    'rolePermissao' => [
+        '',
+    ],
+    'middlewares' => [
+        // 'jwt-auth'
+        // 'cache'  
+    ],
+    function ($request)
+    {
+        return new Response(200, Usuario::cadastroProfissao($request), 'application/json');
+    }
+]);
+
+$obRouter->patch('/api/v1/users/profissao/update/{idProfissao}', [
+    'rolePermissao' => [
+        '',
+    ],
+    'middlewares' => [
+        // 'jwt-auth'
+        // 'cache'  
+    ],
+    function ($request, $idProfissao)
+    {
+        return new Response(200, Usuario::updateProfissao($request, $idProfissao), 'application/json');
+    }
+]);
+
+$obRouter->delete('/api/v1/users/profissao/delete/{idProfissao}', [
+    'rolePermissao' => [
+        '',
+    ],
+    'middlewares' => [
+        // 'jwt-auth'
+        // 'cache'  
+    ],
+    function ($request, $idProfissao)
+    {
+        return new Response(200, Usuario::deleteProfissao($request, $idProfissao), 'application/json');
+    }
+]);
+
+/**
+ * Escolaridade
+ */
+$obRouter->get('/api/v1/users/escolaridade', [
+    'rolePermissao' => [
+        '',
+    ],
+    'middlewares' => [
+        // 'jwt-auth'
+        // 'cache'  
+    ],
+    function ($request)
+    {
+        return new Response(200, Usuario::consultaEscolaridade($request), 'application/json');
+    }
+]);
+ 
+$obRouter->post('/api/v1/users/escolaridade', [
+    'rolePermissao' => [
+        '',
+    ],
+    'middlewares' => [
+        // 'jwt-auth'
+        // 'cache'  
+    ],
+    function ($request)
+    {
+        return new Response(200, Usuario::cadastroEscolaridade($request), 'application/json');
+    }
+]);
+
+$obRouter->patch('/api/v1/users/escolaridade/update/{idEscolaridade}', [
+    'rolePermissao' => [
+        '',
+    ],
+    'middlewares' => [
+        // 'jwt-auth'
+        // 'cache'  
+    ],
+    function ($request, $idEscolaridade)
+    {
+        return new Response(200, Usuario::updateEscolaridade($request, $idEscolaridade), 'application/json');
+    }
+]);

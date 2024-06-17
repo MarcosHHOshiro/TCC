@@ -21,4 +21,34 @@ class Escolaridade{
         $this->nome_escolaridade = $nome_escolaridade;
         return $this;
     }
+
+    /**
+     * Get the value of ativa
+     */
+    public function getAtiva() {
+        return $this->ativa;
+    }
+
+    /**
+     * Set the value of ativa
+     */
+    public function setAtiva($ativa): self {
+        $this->ativa = $ativa;
+        return $this;
+    }
+
+    /**
+     * Get the value of id_escolaridade
+     */
+    public function getIdEscolaridade() {
+        return $this->id_escolaridade;
+    }
+
+    /**
+     * Set the value of id_escolaridade
+     */
+    public function setIdEscolaridade($id_escolaridade): self {
+        $this->id_escolaridade = $id_escolaridade;
+        return $this;
+    }
 }

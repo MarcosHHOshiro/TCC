@@ -22,7 +22,7 @@ class CadastraUsuario
         $obUsuario->setIdCidade($postVars["id_cidade"]);
         $obUsuario->setLogin($postVars["login"]);
         $obUsuario->setSenha($postVars["senha"]);
-        $obUsuario->setNivelAcesso($postVars["nivel_acesso"]);
+        // $obUsuario->setNivelAcesso($postVars["nivel_acesso"]);
         $obUsuario->setStatusUsuario($postVars["status_usuario"]);
 
         $useCase = new UsuarioPdo();

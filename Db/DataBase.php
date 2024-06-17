@@ -236,6 +236,32 @@ class DataBase
         return $this->execute($query, array_values($values));
     }
 
+    /**
+     * Consulta de joins
+     *
+     * @param string $where
+     * @param string $fields
+     * @param string $join
+     * @return PDOStatement
+     */
+    public function selectJoinPersonalizavel($where = null, $fields = '*', $join = null, $groupBy = null, $values = null, $orderBy = null)
+    {
+
+        $where = isset($where) ? 'WHERE ' . $where : '';
+        $join = isset($join) ? ' ' . $join : '';
+        $groupBy = isset($groupBy) ? 'GROUP BY ' . $groupBy : '';
+        $orderBy = isset($orderBy) ? 'ORDER BY ' . $orderBy : '';
+
+        $query = 'SELECT ' . $fields . ' FROM ' . $this->table . ' ' . $join . ' ' . $where . ' ' . $groupBy . ' ' . $orderBy;
+
+        // echo "<pre>";
+        // print_r($query);
+        // echo "</pre>";
+        // exit;
+
+        return $this->execute($query, array_values($values));
+    }
+
     //Método responsável por executar atualizações no banco de dados
     public function update($where, $values)
     {
@@ -300,7 +326,7 @@ class DataBase
     }
 
     //Método responsável por excluir dados do banco
-    public function delete($where)
+    public function delete($where, $valuesWhere)
     {
         //MONTA A QUERY
         $query = 'DELETE FROM ' . $this->table . ' WHERE ' . $where;
@@ -311,7 +337,7 @@ class DataBase
         // exit;
 
         //EXECUTA A QUERY
-        $this->execute($query);
+        $this->execute($query, array_values($valuesWhere));
 
         //RETORNA SUCESSO
         return true;
