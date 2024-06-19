@@ -2,16 +2,19 @@
 
 namespace app\Dominio\Usuario;
 
-class Usuario{
+class Usuario
+{
 
+    private Profissao $profissao;
+    // private $id_escolaridade;
+    private Escolaridade $escolaridade;
+    // private $id_cidade;
+    // private $id_cidade;
     private $id_usuario;
     private $nome_usuario;
     private $email;
-    private $id_profissao;
-    private $id_escolaridade;
     private $data_nascimento;
     private $sexo;
-    private $id_cidade;
     private $senha;
     private $login;
     private $nivel_acesso;
@@ -72,42 +75,6 @@ class Usuario{
     }
 
     /**
-     * Get the value of id_profissao
-     */
-    public function getIdProfissao()
-    {
-        return $this->id_profissao;
-    }
-
-    /**
-     * Set the value of id_profissao
-     */
-    public function setIdProfissao($id_profissao): self
-    {
-        $this->id_profissao = $id_profissao;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of id_escolaridade
-     */
-    public function getIdEscolaridade()
-    {
-        return $this->id_escolaridade;
-    }
-
-    /**
-     * Set the value of id_escolaridade
-     */
-    public function setIdEscolaridade($id_escolaridade): self
-    {
-        $this->id_escolaridade = $id_escolaridade;
-
-        return $this;
-    }
-
-    /**
      * Get the value of data_nascimento
      */
     public function getDataNascimento()
@@ -139,24 +106,6 @@ class Usuario{
     public function setSexo($sexo): self
     {
         $this->sexo = $sexo;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of id_cidade
-     */
-    public function getIdCidade()
-    {
-        return $this->id_cidade;
-    }
-
-    /**
-     * Set the value of id_cidade
-     */
-    public function setIdCidade($id_cidade): self
-    {
-        $this->id_cidade = $id_cidade;
 
         return $this;
     }
@@ -218,15 +167,59 @@ class Usuario{
     /**
      * Get the value of login
      */
-    public function getLogin() {
+    public function getLogin()
+    {
         return $this->login;
     }
 
     /**
      * Set the value of login
      */
-    public function setLogin($login): self {
+    public function setLogin($login): self
+    {
         $this->login = $login;
+        return $this;
+    }
+
+    /**
+     * Get the value of profissao
+     *
+     * @return Profissao
+     */
+    public function getProfissao(): Profissao {
+        return $this->profissao;
+    }
+
+    /**
+     * Set the value of profissao
+     *
+     * @param Profissao $profissao
+     *
+     * @return self
+     */
+    public function setProfissao(Profissao $profissao): self {
+        $this->profissao = $profissao;
+        return $this;
+    }
+
+    /**
+     * Get the value of escolaridade
+     *
+     * @return Escolaridade
+     */
+    public function getEscolaridade(): Escolaridade {
+        return $this->escolaridade;
+    }
+
+    /**
+     * Set the value of escolaridade
+     *
+     * @param Escolaridade $escolaridade
+     *
+     * @return self
+     */
+    public function setEscolaridade(Escolaridade $escolaridade): self {
+        $this->escolaridade = $escolaridade;
         return $this;
     }
 }
