@@ -32,6 +32,21 @@ $obRouter->get('/api/v1/users', [
     }
 ]);
 
+$obRouter->patch('/api/v1/users/update/{idUsuario}', [
+    'rolePermissao' => [
+        '',
+    ],
+    'middlewares' => [
+        // 'jwt-auth'
+        // 'cache'  
+    ],
+    function ($request, $idUsuario)
+    {
+        return new Response(200, Usuario::updateUsuario($request, $idUsuario), 'application/json');
+    }
+]);
+
+
 /**
  * Profissao
  */
@@ -133,5 +148,19 @@ $obRouter->patch('/api/v1/users/escolaridade/update/{idEscolaridade}', [
     function ($request, $idEscolaridade)
     {
         return new Response(200, Usuario::updateEscolaridade($request, $idEscolaridade), 'application/json');
+    }
+]);
+
+$obRouter->post('/api/v1/users/auth', [
+    'rolePermissao' => [
+        '',
+    ],
+    'middlewares' => [
+        // 'jwt-auth'
+        // 'cache'  
+    ],
+    function ($request)
+    {
+        return new Response(200, Usuario::authUsuario($request), 'application/json');
     }
 ]);

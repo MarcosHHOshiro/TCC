@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Aplicacao\Usuario\AuthUsuario;
 use App\Aplicacao\Usuario\CadastraProfissao;
 use App\Aplicacao\Usuario\CadastraUsuario;
 use App\Aplicacao\Usuario\CadastroEscolaridade;
@@ -11,6 +12,7 @@ use App\Aplicacao\Usuario\ConsultaUsuario;
 use App\Aplicacao\Usuario\DeleteProfissao;
 use App\Aplicacao\Usuario\updateEscolaridade;
 use App\Aplicacao\Usuario\UpdateProfissao;
+use App\Aplicacao\Usuario\UpdateUsuario;
 use Http\Request;
 
 class Usuario
@@ -35,6 +37,21 @@ class Usuario
     {
         $useCase = new ConsultaUsuario();
         return $useCase->executa($request);
+    }
+
+    public static function updateUsuario($request, $idUsuario)
+    {
+        $useCase = new UpdateUsuario();
+        $resultado = $useCase->executa($request, $idUsuario);
+
+        if($resultado){
+            return [
+                'sucesso' => 'Cadastro realizado com sucesso!'
+            ];
+        }else{
+            throw new \Exception('Erro ao realizar atualização!', 500);
+        }
+
     }
 
     /**
@@ -106,5 +123,11 @@ class Usuario
         return [
             'sucesso' => 'Cadastro alterado com sucesso!'
         ];
+    }
+
+    public static function authUsuario($request)
+    {
+        $useCase = new AuthUsuario();
+        return $useCase->executa($request);
     }
 }
