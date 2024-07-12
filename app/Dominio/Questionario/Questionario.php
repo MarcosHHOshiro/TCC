@@ -1,19 +1,23 @@
 <?php
 
 namespace app\Dominio\Questionario;
+use app\Dominio\Url\Url;
+use app\Dominio\Usuario\Escolaridade;
+use app\Dominio\Usuario\Profissao;
+use app\Dominio\Usuario\Usuario;
 
 class Questionario{
     private $id_questionario;
-    private $id_url;
+    private Url $url;
     private $titulo;
     private $descricao;
-    private $id_usuario_criou;
+    private Usuario $usuario;
     private $padrao;
     private $data_inicio;
     private $data_fim;
     private $status;
-    private $id_profissao;
-    private $id_escolaridade;
+    private Profissao $profissao;
+    private Escolaridade $escolaridade;
 
 
     /**
@@ -30,24 +34,6 @@ class Questionario{
     public function setIdQuestionario($id_questionario): self
     {
         $this->id_questionario = $id_questionario;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of id_url
-     */
-    public function getIdUrl()
-    {
-        return $this->id_url;
-    }
-
-    /**
-     * Set the value of id_url
-     */
-    public function setIdUrl($id_url): self
-    {
-        $this->id_url = $id_url;
 
         return $this;
     }
@@ -84,24 +70,6 @@ class Questionario{
     public function setDescricao($descricao): self
     {
         $this->descricao = $descricao;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of id_usuario_criou
-     */
-    public function getIdUsuarioCriou()
-    {
-        return $this->id_usuario_criou;
-    }
-
-    /**
-     * Set the value of id_usuario_criou
-     */
-    public function setIdUsuarioCriou($id_usuario_criou): self
-    {
-        $this->id_usuario_criou = $id_usuario_criou;
 
         return $this;
     }
@@ -197,20 +165,86 @@ class Questionario{
     }
 
     /**
-     * Get the value of id_escolaridade
+     * Get the value of url
+     *
+     * @return Url
      */
-    public function getIdEscolaridade()
-    {
-        return $this->id_escolaridade;
+    public function getUrl(): Url {
+        return $this->url;
     }
 
     /**
-     * Set the value of id_escolaridade
+     * Set the value of url
+     *
+     * @param Url $url
+     *
+     * @return self
      */
-    public function setIdEscolaridade($id_escolaridade): self
-    {
-        $this->id_escolaridade = $id_escolaridade;
+    public function setUrl(Url $url): self {
+        $this->url = $url;
+        return $this;
+    }
 
+    /**
+     * Get the value of usuario
+     *
+     * @return Usuario
+     */
+    public function getUsuario(): Usuario {
+        return $this->usuario;
+    }
+
+    /**
+     * Set the value of usuario
+     *
+     * @param Usuario $usuario
+     *
+     * @return self
+     */
+    public function setUsuario(Usuario $usuario): self {
+        $this->usuario = $usuario;
+        return $this;
+    }
+
+    /**
+     * Get the value of profissao
+     *
+     * @return Profissao
+     */
+    public function getProfissao(): Profissao {
+        return $this->profissao;
+    }
+
+    /**
+     * Set the value of profissao
+     *
+     * @param Profissao $profissao
+     *
+     * @return self
+     */
+    public function setProfissao(Profissao $profissao): self {
+        $this->profissao = $profissao;
+        return $this;
+    }
+
+    /**
+     * Get the value of escolaridade
+     *
+     * @return Escolaridade
+     */
+    public function getEscolaridade(): Escolaridade {
+        return $this->escolaridade;
+    }
+
+    /**
+     * Set the value of escolaridade
+     *
+     * @param Escolaridade $escolaridade
+     *
+     * @return self
+     */
+    public function setEscolaridade(Escolaridade $escolaridade): self {
+        $this->escolaridade = $escolaridade;
         return $this;
     }
 }

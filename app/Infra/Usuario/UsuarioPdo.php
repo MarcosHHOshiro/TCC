@@ -82,11 +82,11 @@ class UsuarioPdo
     {
         $this->db->setTable("tb_usuario");
         $senha = $this->db->selectJoinPersonalizavel(
-            null,
+            "login = ?",
             "senha",
             null,
             null,
-            [],
+            [$login],
             null
         )->fetchColumn();
 

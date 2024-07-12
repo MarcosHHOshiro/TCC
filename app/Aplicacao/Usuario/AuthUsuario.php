@@ -3,6 +3,7 @@
 namespace App\Aplicacao\Usuario;
 
 use App\Infra\Usuario\UsuarioPdo;
+use Firebase\JWT\JWT;
 use Http\Request;
 
 class AuthUsuario
@@ -18,9 +19,20 @@ class AuthUsuario
         $senha = $useCase->consultaParaLogin($postVars['login']);
 
         if (!password_verify($postVars['senha'], $senha)) {
-            throw new \Exception("O usuário, CPF/CNPJ ou senha incorreto!", 401);
+            throw new \Exception("Usuário ou senha incorreto!", 401);
         }
 
-        
+        $payload = [
+            "exp" => time() + 60 * 60 * 24,
+            // "ultima_acao" => time(),
+            'login' => $postVars['login'],
+            // 'user' => $obUsuario->getIdUsuario(),
+            // 'grupo' => $obUsuario->getNomeGrupo()
+        ];
+
+        return [
+            'token' => JWT::encode($payload, getenv('JWT_KEY'), 'HS256'),
+        ];
+
     }
 }

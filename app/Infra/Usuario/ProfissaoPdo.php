@@ -9,7 +9,7 @@ use PDO;
 
 class ProfissaoPdo
 {
-    private $db;
+    private DataBase $db;
 
     public function __construct()
     {
