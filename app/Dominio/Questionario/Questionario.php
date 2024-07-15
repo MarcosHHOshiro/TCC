@@ -19,7 +19,6 @@ class Questionario{
     private Profissao $profissao;
     private Escolaridade $escolaridade;
 
-
     /**
      * Get the value of id_questionario
      */
@@ -142,24 +141,6 @@ class Questionario{
     public function setStatus($status): self
     {
         $this->status = $status;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of id_profissao
-     */
-    public function getIdProfissao()
-    {
-        return $this->id_profissao;
-    }
-
-    /**
-     * Set the value of id_profissao
-     */
-    public function setIdProfissao($id_profissao): self
-    {
-        $this->id_profissao = $id_profissao;
 
         return $this;
     }
