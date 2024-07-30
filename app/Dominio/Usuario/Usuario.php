@@ -20,6 +20,11 @@ class Usuario
     private $nivel_acesso;
     private $status_usuario;
 
+    public function addTelefone()
+    {
+        
+    }
+
     /**
      * Get the value of id_usuario
      */
