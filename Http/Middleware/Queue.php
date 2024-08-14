@@ -14,6 +14,7 @@ class Queue{
 
     //função de execução do controlador
     private $controller;
+    private $rolePermission;
 
     //argumentos da cunção do controlador
     private $controllerArgs;
@@ -26,11 +27,12 @@ class Queue{
      * @param Clousure $controller
      * @param array $controllerArgs
      */
-    public function __construct($middlewares, $controller,$controllerArgs)
+    public function __construct($rolePermission, $middlewares, $controller,$controllerArgs)
     {
         $this -> middlewares = array_merge(self::$default, $middlewares);
         $this -> controller = $controller;
         $this -> controllerArgs = $controllerArgs;
+        $this -> rolePermission = $rolePermission;
     }
     
     /**
@@ -61,17 +63,18 @@ class Queue{
      * @return Response
      */
     public function next($request){
+        
         //Veridica se a fila esta vazia
         if(empty($this->middlewares)) return call_user_func_array($this->controller, $this->controllerArgs);
 
         //middleware   
         $middleware = array_shift($this->middlewares);
-
+        
         //verifica o mapeamento 
         if(!isset(self::$map[$middleware])){
             throw new \Exception("Problemas ao processar o middleware da requisição", 500);
         }
-
+        
         //next
         $queue = $this;
         $next = function($request) use($queue){
@@ -79,7 +82,7 @@ class Queue{
         };
 
         //executa o middleware
-        return (new self::$map[$middleware]) ->handle($request, $next);
+        return (new self::$map[$middleware])->handle($request, $next, $this->rolePermission);
 
     }
 } 

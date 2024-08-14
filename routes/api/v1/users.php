@@ -3,7 +3,7 @@ namespace Routes\api\v1;
 
 use Http\Response;
 use \App\Controller\Usuario;
-
+// print_r('batata');exit;
 $obRouter->post('/api/v1/users', [
     'rolePermissao' => [
         '',
@@ -20,10 +20,10 @@ $obRouter->post('/api/v1/users', [
 
 $obRouter->get('/api/v1/users', [
     'rolePermissao' => [
-        '',
+        'U',
     ],
     'middlewares' => [
-        // 'jwt-auth'
+        'jwt-auth'
         // 'cache'  
     ],
     function ($request)
@@ -162,5 +162,20 @@ $obRouter->post('/api/v1/users/auth', [
     function ($request)
     {
         return new Response(200, Usuario::authUsuario($request), 'application/json');
+    }
+]);
+
+//adim
+$obRouter->get('/api/v1/users/admin/daPermitido', [
+    'rolePermissao' => [
+        'A',
+    ],
+    'middlewares' => [
+        // 'jwt-auth'
+        // 'cache'  
+    ],
+    function ($request)
+    {
+        return new Response(200, Usuario::daPermitido($request), 'application/json');
     }
 ]);

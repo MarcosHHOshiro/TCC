@@ -19,6 +19,8 @@ class Usuario
     private $login;
     private $nivel_acesso;
     private $status_usuario;
+    private $permitido;
+    private $permissao;
 
     public function addTelefone()
     {
@@ -225,6 +227,42 @@ class Usuario
      */
     public function setEscolaridade(Escolaridade $escolaridade): self {
         $this->escolaridade = $escolaridade;
+        return $this;
+    }
+
+    /**
+     * Get the value of permitido
+     */
+    public function getPermitido()
+    {
+        return $this->permitido;
+    }
+
+    /**
+     * Set the value of permitido
+     */
+    public function setPermitido($permitido): self
+    {
+        $this->permitido = $permitido;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of permissao
+     */
+    public function getPermissao()
+    {
+        return $this->permissao;
+    }
+
+    /**
+     * Set the value of permissao
+     */
+    public function setPermissao($permissao): self
+    {
+        $this->permissao = $permissao;
+
         return $this;
     }
 }

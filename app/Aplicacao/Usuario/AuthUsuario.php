@@ -16,15 +16,15 @@ class AuthUsuario
         }
         
         $useCase = new UsuarioPdo();
-        $senha = $useCase->consultaParaLogin($postVars['login']);
-
-        if (!password_verify($postVars['senha'], $senha)) {
+        $dados = $useCase->consultaParaLogin($postVars['login']);
+         
+        if (!password_verify($postVars['senha'], $dados['senha'])) {
             throw new \Exception("Usuário ou senha incorreto!", 401);
         }
 
         $payload = [
             "exp" => time() + 60 * 60 * 24,
-            // "ultima_acao" => time(),
+            // "permissao" => $dados['permissao'],
             'login' => $postVars['login'],
             // 'user' => $obUsuario->getIdUsuario(),
             // 'grupo' => $obUsuario->getNomeGrupo()
@@ -32,6 +32,7 @@ class AuthUsuario
 
         return [
             'token' => JWT::encode($payload, getenv('JWT_KEY'), 'HS256'),
+            "permissao" => $dados['permissao'],
         ];
 
     }

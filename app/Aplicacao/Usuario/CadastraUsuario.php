@@ -13,13 +13,22 @@ class CadastraUsuario
     public function executa(Request $request)
     {
         $postVars = $request->getPostVars();
+     
+        if($postVars['permissao'] == "U"){
+            $permissao = "U";
+        }else if($postVars['permissao'] == "C"){
+            $permissao = "C";
+        }else{
+            throw new \Exception("Informe valores permitidos!");
+        }
+
         $obUsuario = new Usuario();
         
         $obProfissao= new Profissao();
-        $obProfissao->setIdProfissao($postVars["id_profissao"]);
+        $obProfissao->setIdProfissao(empty($postVars["id_profissao"]) ? null : $postVars["id_profissao"]);
         
         $obEscolaridade = new Escolaridade();
-        $obEscolaridade->setIdEscolaridade($postVars["id_escolaridade"]);
+        $obEscolaridade->setIdEscolaridade(empty($postVars["id_escolaridade"]) ? null : $postVars["id_escolaridade"]);
 
         $obUsuario->setNomeUsuario($postVars["nome_usuario"]);
         $obUsuario->setEmail($postVars["email"]);
@@ -30,7 +39,8 @@ class CadastraUsuario
         // $obUsuario->setIdCidade($postVars["id_cidade"]);
         $obUsuario->setLogin($postVars["login"]);
         $obUsuario->setSenha(password_hash($postVars["senha"], PASSWORD_DEFAULT));
-        // $obUsuario->setNivelAcesso($postVars["nivel_acesso"]);
+        $obUsuario->setPermissao($permissao);
+        $obUsuario->setPermitido('false');
         $obUsuario->setStatusUsuario($postVars["status_usuario"]);
 
         $useCase = new UsuarioPdo();

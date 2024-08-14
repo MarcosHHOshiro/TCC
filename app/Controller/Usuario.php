@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Aplicacao\Usuario\Admin\ConsultaDarPermitido;
+use App\Aplicacao\Usuario\Admin\DarPermitido;
 use App\Aplicacao\Usuario\AuthUsuario;
 use App\Aplicacao\Usuario\CadastraProfissao;
 use App\Aplicacao\Usuario\CadastraUsuario;
@@ -128,6 +130,12 @@ class Usuario
     public static function authUsuario($request)
     {
         $useCase = new AuthUsuario();
+        return $useCase->executa($request);
+    }
+
+    public static function daPermitido($request)
+    {
+        $useCase = new ConsultaDarPermitido();
         return $useCase->executa($request);
     }
 }

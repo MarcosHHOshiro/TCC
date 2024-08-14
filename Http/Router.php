@@ -179,7 +179,7 @@ class Router{
             }
             
             //retorna a execução da fila
-            return (new MiddlewareQueue($route['middlewares'], $route['controller'], $args))->next($this->request);
+            return (new MiddlewareQueue($route['rolePermissao'], $route['middlewares'], $route['controller'], $args))->next($this->request);
         }catch(Exception $e){
             return new Response($e->getCode(), $this->getErrorMessage($e->getMessage()), $this->contentType);
         }    

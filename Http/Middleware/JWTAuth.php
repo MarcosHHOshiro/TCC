@@ -2,8 +2,11 @@
 namespace Http\Middleware;
 
 use \App\ClientRegisterInit\Model\LoginModel;
+use App\Infra\Usuario\UsuarioPdo;
 use \Firebase\JWT\JWT;
 use Firebase\JWT\Key;
+
+use function PHPUnit\Framework\throwException;
 
 class JWTAuth{
 
@@ -12,7 +15,7 @@ class JWTAuth{
      * @param Request $request
      * @return void
      */
-    private function getJWTAuthUser($request){
+    private function getJWTAuthUser($request, $rolePermission){
         $headers = $request->getHeaders();
         
         //toke puro em jwt
@@ -24,27 +27,33 @@ class JWTAuth{
         }catch(\Exception $e){
             throw new \Exception("Token invalido", 403);
         }
-
-        //login
-        $login[] = $decode['login'] ?? '';
-
+        $login = $decode['login'] ?? '';
+        
+        $usuario = new UsuarioPdo();
         //busca o usuario pelo login
-        $obUser = LoginModel::getUsuarioByLogin("login = ?", null, null, "login, password_user", $login);
-
-        //RETORNA O USUARIO
-        return $obUser instanceof LoginModel ? $obUser : false;
+        $usuario->setTable("tb_usuario");
+        $permissao =  $usuario->selectPadrao("login = ?", "permissao", null, null, [$login], null)->fetchColumn();
+         
+        if(!empty($permissao)){
+            if($permissao == $rolePermission[0]){
+                return true;
+            }else{
+                throw new \Exception("Você não tem acesso!");
+            }
+        }else{
+            throw new \Exception("Você não tem acesso!");
+        }
     }
 
     /**método responsavel por validar o acesso via JWT
      * @param Request $requst
      */
-    protected function auth($request){
-
+    protected function auth($request,  $rolePermission){
         //VERIFICA O USUARIO RECEBIDO
-        if($obUser = $this->getJWTAuthUser($request)){ 
+        if($obUser = $this->getJWTAuthUser($request, $rolePermission)){ 
             return $obUser;
         }
-
+        
         //emite o erro de senha invalida
         throw new \Exception("Acesso negado", 403);
     }
@@ -55,9 +64,9 @@ class JWTAuth{
      * @param Closure $next
      * @return Response
      */
-    public function handle($request, $next){
+    public function handle($request, $next,  $rolePermission){
         //REALIZA A VALIDAÇÃO DO ACESSO VIA JWT
-        $this->auth($request);
+        $this->auth($request, $rolePermission);
 
 
         return $next($request);

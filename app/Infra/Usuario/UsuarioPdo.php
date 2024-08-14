@@ -16,6 +16,11 @@ class UsuarioPdo
         $this->db = new DataBase;
     }
 
+    public function setTable(string $table)
+    {
+        $this->db->setTable($table);
+    }
+
     public function cadastro(Usuario $obUsuario): int
     {
         $this->db->setTable("tb_usuario");
@@ -29,6 +34,8 @@ class UsuarioPdo
             'id_cidade' => null,
             'login' => $obUsuario->getLogin(),
             'senha' => $obUsuario->getSenha(),
+            'permitido' => $obUsuario->getPermitido(),
+            'permissao' => $obUsuario->getPermissao(),
             'status_usuario' => $obUsuario->getStatusUsuario(),
         ]);
 
@@ -81,20 +88,34 @@ class UsuarioPdo
     public function consultaParaLogin(string $login)
     {
         $this->db->setTable("tb_usuario");
-        $senha = $this->db->selectJoinPersonalizavel(
+        $dados = $this->db->selectJoinPersonalizavel(
             "login = ?",
-            "senha",
+            "senha, permissao",
             null,
             null,
             [$login],
             null
-        )->fetchColumn();
-
-        if(empty($senha))
+        )->fetch(PDO::FETCH_ASSOC);
+        
+        if(empty($dados))
         {
             throw new Exception("O usuário, CPF/CNPJ ou senha incorreto!");
         }
 
-        return $senha;
+        return $dados;
+    }
+
+    public function selectPadrao(string $where = null,string $fields = '*', string $join = null, string $groupBy = null, array $values = null, string $orderBy = null)
+    {
+        $query = $this->db->selectJoinPersonalizavel(
+            $where, 
+            $fields, 
+            $join, 
+            $groupBy, 
+            $values,
+            $orderBy
+        );
+
+        return $query;
     }
 }
