@@ -33,6 +33,7 @@ class AuthUsuario
         return [
             'token' => JWT::encode($payload, getenv('JWT_KEY'), 'HS256'),
             "permissao" => $dados['permissao'],
+            "nome_usuario" => $dados['nome_usuario'],
         ];
 
     }

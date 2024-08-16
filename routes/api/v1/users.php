@@ -176,6 +176,20 @@ $obRouter->get('/api/v1/users/admin/daPermitido', [
     ],
     function ($request)
     {
-        return new Response(200, Usuario::daPermitido($request), 'application/json');
+        return new Response(200, Usuario::consultaDeUsuarioQueFizeramOproprioCadastro($request), 'application/json');
+    }
+]);
+
+$obRouter->patch('/api/v1/users/admin/daPermitido/{idUsuario}', [
+    'rolePermissao' => [
+        'A',
+    ],
+    'middlewares' => [
+        'jwt-auth'
+        // 'cache'  
+    ],
+    function ($request, $idUsuario)
+    {
+        return new Response(200, Usuario::daPermitidoParaUsuarioAutoCadastro($request, $idUsuario), 'application/json');
     }
 ]);

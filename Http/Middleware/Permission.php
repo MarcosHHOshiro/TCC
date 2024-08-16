@@ -11,7 +11,7 @@ class Permission extends JWTAuth
     public function handle($request, $next)
     {
         $user = $this->auth($request);
-        print_r($user);exit;
+       
         $route = $request->getRoute();
 
         // Verifica se o usuário tem permissão de acessar a rota

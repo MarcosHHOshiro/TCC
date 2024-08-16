@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Aplicacao\Usuario\Admin\ConsultaDarPermitido;
+use App\Aplicacao\Usuario\Admin\DaPermitidoParaUsuarioAutoCadastrado;
 use App\Aplicacao\Usuario\Admin\DarPermitido;
 use App\Aplicacao\Usuario\AuthUsuario;
 use App\Aplicacao\Usuario\CadastraProfissao;
@@ -133,9 +134,15 @@ class Usuario
         return $useCase->executa($request);
     }
 
-    public static function daPermitido($request)
+    public static function consultaDeUsuarioQueFizeramOproprioCadastro($request)
     {
         $useCase = new ConsultaDarPermitido();
         return $useCase->executa($request);
+    }
+
+    public static function daPermitidoParaUsuarioAutoCadastro($request, $idUsuario)
+    {
+        $useCase = new DaPermitidoParaUsuarioAutoCadastrado();
+        return $useCase->executa($request, $idUsuario);
     }
 }

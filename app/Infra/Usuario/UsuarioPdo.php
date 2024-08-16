@@ -90,7 +90,7 @@ class UsuarioPdo
         $this->db->setTable("tb_usuario");
         $dados = $this->db->selectJoinPersonalizavel(
             "login = ?",
-            "senha, permissao",
+            "senha, permissao, nome_usuario",
             null,
             null,
             [$login],
@@ -115,6 +115,13 @@ class UsuarioPdo
             $values,
             $orderBy
         );
+
+        return $query;
+    }
+
+    public function updatePadrao(string $where, array $values, array $valoresWhere)
+    {
+        $query = $this->db->update2($where, $values, $valoresWhere);
 
         return $query;
     }
