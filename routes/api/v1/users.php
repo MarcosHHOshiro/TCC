@@ -20,7 +20,7 @@ $obRouter->post('/api/v1/users', [
 
 $obRouter->get('/api/v1/users', [
     'rolePermissao' => [
-        'U',
+        'A',
     ],
     'middlewares' => [
         'jwt-auth'
