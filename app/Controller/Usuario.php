@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Aplicacao\Usuario\Admin\CadastroUser;
 use App\Aplicacao\Usuario\Admin\ConsultaDarPermitido;
 use App\Aplicacao\Usuario\Admin\DaPermitidoParaUsuarioAutoCadastrado;
 use App\Aplicacao\Usuario\Admin\DarPermitido;
@@ -144,5 +145,11 @@ class Usuario
     {
         $useCase = new DaPermitidoParaUsuarioAutoCadastrado();
         return $useCase->executa($request, $idUsuario);
+    }
+
+    public static function administradorCadastraUser($request)
+    {
+        $useCase = new CadastroUser;
+        return $useCase->executa($request);
     }
 }

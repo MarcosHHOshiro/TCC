@@ -193,3 +193,17 @@ $obRouter->patch('/api/v1/users/admin/daPermitido/{idUsuario}', [
         return new Response(200, Usuario::daPermitidoParaUsuarioAutoCadastro($request, $idUsuario), 'application/json');
     }
 ]);
+
+$obRouter->post('/api/v1/users/admin/cadastraUser', [
+    'rolePermissao' => [
+        'A',
+    ],
+    'middlewares' => [
+        'jwt-auth'
+        // 'cache'  
+    ],
+    function ($request)
+    {
+        return new Response(200, Usuario::administradorCadastraUser($request), 'application/json');
+    }
+]);

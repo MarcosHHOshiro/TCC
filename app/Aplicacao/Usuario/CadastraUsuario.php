@@ -6,6 +6,7 @@ use App\Dominio\Usuario\Escolaridade;
 use App\Dominio\Usuario\Profissao;
 use App\Dominio\Usuario\Usuario;
 use App\Infra\Usuario\UsuarioPdo;
+use Exception;
 use Http\Request;
 
 class CadastraUsuario
@@ -19,8 +20,10 @@ class CadastraUsuario
         }else if($postVars['permissao'] == "C"){
             $permissao = "C";
         }else{
-            throw new \Exception("Informe valores permitidos!");
+            throw new Exception("Informe valores permitidos!");
         }
+
+        $this->verificaSeJaExisteEsseUsuario($postVars['login']);
 
         $obUsuario = new Usuario();
         
@@ -45,5 +48,19 @@ class CadastraUsuario
 
         $useCase = new UsuarioPdo();
         return $useCase->cadastro($obUsuario);
+    }
+
+    private function verificaSeJaExisteEsseUsuario(string $nomeUsuario)
+    {
+        $repositorio = new UsuarioPdo();
+
+        $repositorio->setTable("tb_usuario");
+        $temUsuario = $repositorio->selectPadrao("login = ?", "1", null, null, [$nomeUsuario], null)->fetchColumn();
+
+        if(!empty($temUsuario)){
+            throw new Exception("Nome de usuário já utilizado!");
+        }
+
+        return;
     }
 }
