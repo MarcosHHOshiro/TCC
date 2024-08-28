@@ -1,55 +1,50 @@
 <?php
 
 namespace App\Controller;
-use App\Aplicacao\Url\CadastroUrl;
 
+use App\Aplicacao\Questionario\CadastrarQuestionarioPeloAdmin\CadastraQuestionarioPeloAdmin;
+use App\Aplicacao\Questionario\CadastrarQuestionarioPeloAdmin\CadastroPerguntaEmQuestionario;
+use App\Aplicacao\Questionario\CadastrarQuestionarioPeloAdmin\ConsultaPerguntasDeCertoQuestionario;
+use App\Aplicacao\Questionario\CadastrarQuestionarioPeloAdmin\ConsultaQuestionariosDoUserLogado;
+use App\Aplicacao\Questionario\CadastrarQuestionarioPeloAdmin\UpdatePerguntaCadastrada;
+use App\Aplicacao\Questionario\CadastrarQuestionarioPeloAdmin\UpdateQuestionario;
 use Http\Request;
 
 class Questionario
 {
-    public static function cadastroUrl(Request $request)
+    public static function cadastroQuestionario(Request $request)
     {
-        $useCase = new CadastroUrl();
-        $useCase->executa($request);
-
-        return [
-            'sucesso' => 'Cadastro realizado com sucesso'
-        ];
-    }
-
-    public static function consultaUrl($request)
-    {
-        $useCase = new ConsultaUrl();
+        $useCase = new CadastraQuestionarioPeloAdmin();
         return $useCase->executa($request);
     }
 
-    public static function updateUrl($request, $idUrl)
+    public static function cadastroPerguntaEmUmQuestionario($request)
     {
-        $useCase = new UpdateUrl();
-        $resultado = $useCase->executa($request, $idUrl);
-
-        if($resultado){
-            return [
-                'sucesso' => 'Cadastro alterado com sucesso!'
-            ];
-        }else{
-            throw new \Exception('Erro ao realizar atualização!', 500);
-        }
+        $useCase = new CadastroPerguntaEmQuestionario;
+        return $useCase->executa($request);
     }
 
-    public static function deleteUrl($request, $idUrl)
+    public static function updatePergunta($request)
     {
-        $url = new DeleteUrl();
-        $profissoesUsuario = $url->executa($idUrl);
-
-        // if(!empty($profissoesUsuario))
-        // {
-        //     throw new \Exception("Não é possível deletar esta profissao, pois existem usuários que a utizam!");
-        // }
-
-        return [
-            'sucesso' => 'Cadastro deletado com sucesso!'
-        ];
+        $useCase = new UpdatePerguntaCadastrada;
+        return $useCase->executa($request);
     }
 
+    public static function consultaPerguntaDeCertoQuestionario($request, $idQuestionario)
+    {
+        $useCase = new ConsultaPerguntasDeCertoQuestionario;
+        return $useCase->executa($request, $idQuestionario);
+    }
+
+    public static function consultaQuestionariosDoUser($request)
+    {
+        $useCase = new ConsultaQuestionariosDoUserLogado;
+        return $useCase->executa($request);
+    }
+
+    public static function updateQuestionario($request, $idQuestionario)
+    {
+        $useCase = new UpdateQuestionario();
+        return $useCase->executa($request, $idQuestionario);
+    }
 }

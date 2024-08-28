@@ -1,56 +1,55 @@
 <?php
 
 namespace App\Aplicacao\Questionario\CadastrarQuestionarioPeloAdmin;
-use app\Dominio\Questionario\Questionario;
-use app\Dominio\Url\Url;
-use app\Dominio\Usuario\Escolaridade;
-use app\Dominio\Usuario\Profissao;
-use app\Dominio\Usuario\Usuario;
-use App\Infra\Questionario\RepositorioDeQuestionarioComPdo;
 
-class CadastrarQuestionarioPeloAdmin
+use App\Dominio\Questionario\Perguntas;
+use App\Dominio\Questionario\Questionario;
+use App\Dominio\Usuario\Escolaridade;
+use App\Dominio\Usuario\Profissao;
+use App\Dominio\Usuario\Usuario;
+use App\Infra\Questionario\RepositorioDeQuestionarioComPdo;
+use DateTime;
+
+class CadastraQuestionarioPeloAdmin
 {
-    
-    public function executa(Request $request)
+    public function executa($request)
     {
         $postVars = $request->getPostVars();
+        $headers = $request->getHeaders();
+        $data = new DateTime();
+        $data = $data->format('Y-m-d');
+        $repositrioQuestionario = new RepositorioDeQuestionarioComPdo;
+        $idUsuario = $repositrioQuestionario->pegaIdUsuarioLogado($headers);
 
-        if(empty($postVars['url'])){
-            throw new \Exception('Informe o nome da URL para realizar o cadastro!', 400);
-        }
+        $obQuestionario = new Questionario;
+        $obUsuario = new Usuario;
+        $obProfissao = new Profissao;
+        $obEscolaridade = new Escolaridade;
 
-        $idUsuario = $this->pegaIdUsuario();
-
-        $obUrl = new Url();
-        $obUrl->setIdUrl($postVars['id_url']);
-
-        $obUsuario = new Usuario();
-        $obUsuario->setIdUsuario($idUsuario);
-
-        $obProfissao = new Profissao();
-        $obProfissao->setIdProfissao($postVars['id_profissao']);
-
-        $obEscolaridade = new Escolaridade();
-        $obEscolaridade->setIdEscolaridade($postVars['id_escolaridade']);
-
-        $obQuestionario = new Questionario();
-        $obQuestionario->setUrl($obUrl);
-        $obQuestionario->setDescricao($postVars['descricao']);
+        $repositrioQuestionario->beginTransaction();
         $obQuestionario->setTitulo($postVars['titulo']);
-        $obQuestionario->setUsuario($obUsuario);
+        $obQuestionario->setDescricao($postVars['descricao']);
         $obQuestionario->setPadrao($postVars['padrao']);
-        $obQuestionario->setDataInicio($postVars['data_inicio']);
-        $obQuestionario->setDataFim($postVars['data_fim']);
+        $obQuestionario->setDataInicio($data);
+        $obQuestionario->setDataFim(empty($postVars['data_fim']) ? null : $postVars['data_fim']);
         $obQuestionario->setStatus($postVars['status']);
-        $obQuestionario->setProfissao($obProfissao);
-        $obQuestionario->setEscolaridade($obEscolaridade);
- 
-        $useCase = new RepositorioDeQuestionarioComPdo();
-        return $useCase->cadastrar($obQuestionario);
-    }
+        $obQuestionario->setUsuario($obUsuario->setIdUsuario($idUsuario));
+        $obQuestionario->setProfissao($obProfissao->setIdProfissao(empty($postVars['id_profissao']) ? null : $postVars['id_profissao']));
+        $obQuestionario->setEscolaridade($obEscolaridade->setIdEscolaridade(empty($postVars['id_escolaridade']) ? null : $postVars['id_escolaridade']));
+        
+        $idQuestionario = $repositrioQuestionario->cadastrar($obQuestionario);
+        $obQuestionario->setIdQuestionario($idQuestionario);
+        
+        $obPergunta = new Perguntas;
+        $obPergunta->setDescricao($postVars['perguntas'][0]['pergunta']);
+        $obPergunta->setIdPrincipio($postVars['perguntas'][0]['principio']);
+        $obPergunta->setQuestionario($obQuestionario);
+        $repositrioQuestionario->cadastrarPerguntas($obPergunta);
 
-    private function pegaIdUsuario()
-    {
-        return 1;
+        $repositrioQuestionario->commit();
+
+        return [
+            'sucesso' => 'Cadastro realizado com sucesso'
+        ];
     }
 }

@@ -8,7 +8,6 @@ use app\Dominio\Usuario\Usuario;
 
 class Questionario{
     private $id_questionario;
-    private Url $url;
     private $titulo;
     private $descricao;
     private Usuario $usuario;
@@ -128,45 +127,6 @@ class Questionario{
     }
 
     /**
-     * Get the value of status
-     */
-    public function getStatus()
-    {
-        return $this->status;
-    }
-
-    /**
-     * Set the value of status
-     */
-    public function setStatus($status): self
-    {
-        $this->status = $status;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of url
-     *
-     * @return Url
-     */
-    public function getUrl(): Url {
-        return $this->url;
-    }
-
-    /**
-     * Set the value of url
-     *
-     * @param Url $url
-     *
-     * @return self
-     */
-    public function setUrl(Url $url): self {
-        $this->url = $url;
-        return $this;
-    }
-
-    /**
      * Get the value of usuario
      *
      * @return Usuario
@@ -226,6 +186,29 @@ class Questionario{
      */
     public function setEscolaridade(Escolaridade $escolaridade): self {
         $this->escolaridade = $escolaridade;
+        return $this;
+    }
+
+    /**
+     * Get the value of status
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * Set the value of status
+     */
+    public function setStatus($status): self
+    {
+        if($status != "A" and $status != "I")
+        {
+            throw new \Exception("Informe um status válido!");
+        }
+
+        $this->status = $status;
+
         return $this;
     }
 }

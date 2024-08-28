@@ -1,0 +1,11 @@
+{
+    "nome_questionario": "Questionário Padrão",
+    "ativo": true,
+    "padrão": true,
+    "perguntas": [
+        {
+            "pergunta": "O site possui mais de 5 erros?",
+            "princípio": 1
+        }
+    ]
+}

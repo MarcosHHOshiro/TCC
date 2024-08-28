@@ -1,11 +1,14 @@
 <?php
 
 namespace App\Infra\Questionario;
-use App\Dominio\Questionario\InterfaceRepositorioDeQuestionario;
+
+use App\Dominio\Questionario\Perguntas;
 use app\Dominio\Questionario\Questionario;
 use DB\DataBase;
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 
-class RepositorioDeQuestionarioComPdo implements InterfaceRepositorioDeQuestionario
+class RepositorioDeQuestionarioComPdo 
 {
 
     private $db;
@@ -14,28 +17,104 @@ class RepositorioDeQuestionarioComPdo implements InterfaceRepositorioDeQuestiona
     {
         $this->db = new DataBase();
     }
-    
-    public function cadastrar(Questionario $questionario): void
+
+    public function beginTransaction()
     {
-        $this->db->setTable("tb_url");
+        $this->db->beginTransaction();
+    }
+
+    public function commit()
+    {
+        $this->db->commit();
+    }
+
+    public function setTable($table)
+    {
+        $this->db->setTable($table);
+    }
+    
+    public function cadastrar(Questionario $questionario): int
+    {
+        $this->db->setTable("tb_questionario");
         $idUrl = ($this->db)->insert([
-            'id_url'    =>  $questionario->getUrl()->getIdUrl(),
             'titulo' =>  $questionario->getTitulo(),
             'descricao' =>  $questionario->getDescricao(),
-            'id_usuario' =>  $questionario->getUsuario()->getIdUsuario(),
+            'id_usuario_criou' =>  $questionario->getUsuario()->getIdUsuario(),
             'padrao' =>  $questionario->getPadrao(),
             'data_inicio' =>  $questionario->getDataInicio(),
-            'data_fim' =>  $questionario->getDataFim(),
+            'data_fim' =>  $questionario->getDataFim(), 
             'status' =>  $questionario->getStatus(),
             'id_profissao' =>  $questionario->getProfissao()->getIdProfissao(),
             'id_escolaridade' =>  $questionario->getEscolaridade()->getIdEscolaridade()
         ]);
 
-        return;
+        return $idUrl;
     }
 
-    public function buscarTodos(): array
+    public function cadastrarPerguntas(Perguntas $perguntas): int
     {
-        
+        $this->db->setTable("tb_perguntas");
+        $id = ($this->db)->insert([
+            'descricao' =>  $perguntas->getDescricao(),
+            'id_principio' =>  $perguntas->getIdPrincipio(),
+            'id_questionario' =>  $perguntas->getQuestionario()->getIdQuestionario()
+        ]);
+
+        return $id;
+    }
+
+    public function pegaIdUsuarioLogado($header)
+    {
+        $jwt = isset($header['Authorization']) ? str_replace('Bearer ', '', $header['Authorization']) : '';
+
+        try{
+            //decode
+            $decode = (array)JWT::decode($jwt, new Key(getenv('JWT_KEY'), 'HS256'));
+        }catch(\Exception $e){
+            throw new \Exception("Token invalido", 403);
+        }
+        $login = $decode['login'] ?? '';
+
+        $this->db->setTable("tb_usuario");
+        $id = $this->db->selectJoinPersonalizavel("login = ?", "id_usuario", null, null, [$login], null)->fetchColumn();
+
+        return $id;
+    }
+
+    public function updatePerguntas(Perguntas $obPergunta, int $idPergunta)
+    {
+        $this->db->setTable("tb_perguntas");
+        $this->db->update2("id_pergunta = ?", [
+            'descricao' => $obPergunta->getDescricao(),
+            'id_principio' => $obPergunta->getIdPrincipio(),
+        ], [$idPergunta]);
+    }
+
+    public function selectPadrao(string $where = null,string $fields = '*', string $join = null, string $groupBy = null, array $values = null, string $orderBy = null)
+    {
+        $query = $this->db->selectJoinPersonalizavel(
+            $where, 
+            $fields, 
+            $join, 
+            $groupBy, 
+            $values,
+            $orderBy
+        );
+
+        return $query;
+    }
+
+    
+    public function updateQuestionario(Questionario $obQuestionario, int $idQuestionario)
+    {
+        $this->db->setTable("tb_questionario");
+        $this->db->update2("id_questionario = ?", [
+            'titulo' => $obQuestionario->getTitulo(),
+            'descricao' => $obQuestionario->getDescricao(),
+            'data_fim' => $obQuestionario->getDataFim(),
+            'status' => $obQuestionario->getStatus()
+        ], [$idQuestionario]);
+
+        return;
     }
 }

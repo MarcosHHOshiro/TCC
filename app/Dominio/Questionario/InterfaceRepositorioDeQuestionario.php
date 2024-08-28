@@ -5,8 +5,6 @@ namespace App\Dominio\Questionario;
 /** crudzin */
 interface InterfaceRepositorioDeQuestionario
 {
-    public function cadastrar(Questionario $questionario): void;
+    public function cadastrar(Questionario $questionario): int;
 
-    /** @return Questionario[] */
-    public function buscarTodos(): array;
 }
