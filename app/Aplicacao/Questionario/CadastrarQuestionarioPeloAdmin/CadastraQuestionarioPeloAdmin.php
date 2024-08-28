@@ -31,6 +31,7 @@ class CadastraQuestionarioPeloAdmin
         $obQuestionario->setDescricao($postVars['descricao']);
         $obQuestionario->setPadrao($postVars['padrao']);
         $obQuestionario->setDataInicio($data);
+        $obQuestionario->setTipo($postVars['tipo']);
         $obQuestionario->setDataFim(empty($postVars['data_fim']) ? null : $postVars['data_fim']);
         $obQuestionario->setStatus($postVars['status']);
         $obQuestionario->setUsuario($obUsuario->setIdUsuario($idUsuario));

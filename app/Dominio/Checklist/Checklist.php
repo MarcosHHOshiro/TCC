@@ -212,4 +212,22 @@ class Checklist{
 
         return $this;
     }
+
+    /**
+     * Get the value of tipo
+     */
+    public function getTipo()
+    {
+        return $this->tipo;
+    }
+
+    /**
+     * Set the value of tipo
+     */
+    public function setTipo($tipo): self
+    {
+        $this->tipo = $tipo;
+
+        return $this;
+    }
 }
