@@ -7,6 +7,7 @@ class Perguntas
     private $id_pergunta;
     private Questionario $questionario;
     private $descricao;
+    private $justificativa;
     private $id_principio;
 
     /**
@@ -77,6 +78,24 @@ class Perguntas
     public function setIdPrincipio($id_principio): self
     {
         $this->id_principio = $id_principio;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of justificativa
+     */
+    public function getJustificativa()
+    {
+        return $this->justificativa;
+    }
+
+    /**
+     * Set the value of justificativa
+     */
+    public function setJustificativa($justificativa): self
+    {
+        $this->justificativa = $justificativa;
 
         return $this;
     }

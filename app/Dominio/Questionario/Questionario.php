@@ -15,6 +15,8 @@ class Questionario{
     private $data_inicio;
     private $data_fim;
     private $status;
+    private $tipo;
+
     private Profissao $profissao;
     private Escolaridade $escolaridade;
 
@@ -208,6 +210,29 @@ class Questionario{
         }
 
         $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of tipo
+     */
+    public function getTipo()
+    {
+        return $this->tipo;
+    }
+
+    /**
+     * Set the value of tipo
+     */
+    public function setTipo($tipo): self
+    {
+        if($tipo != "Q" and $tipo != "I")
+        {
+            throw new \Exception("Informe um tipo válido!");
+        }
+
+        $this->tipo = $tipo;
 
         return $this;
     }

@@ -12,7 +12,7 @@ class ConsultaQuestionariosDoUserLogado
         $idUser = $repositorio->pegaIdUsuarioLogado($request->getHeaders());
 
         $repositorio->setTable("tb_questionario");
-        $items = $repositorio->selectPadrao("tb_questionario.id_usuario_criou = ?", 
+        $items = $repositorio->selectPadrao("tb_questionario.id_usuario_criou = ? and tipo = 'Q'", 
         "tb_questionario.id_questionario, titulo, tb_questionario.descricao, data_inicio, data_fim, padrao", 
         null,
         'tb_questionario.id_questionario',

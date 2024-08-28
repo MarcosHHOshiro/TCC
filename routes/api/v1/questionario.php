@@ -46,6 +46,20 @@ $obRouter->get('/api/v1/questionario/doUsuario', [
     }
 ]);
 
+$obRouter->get('/api/v1/questionario/checklist/doUsuario', [
+    'rolePermissao' => [
+        'A',
+    ],
+    'middlewares' => [
+        'jwt-auth'
+        // 'cache'  
+    ],
+    function ($request)
+    {
+        return new Response(200, Questionario::consultaChecklistDoUser($request), 'application/json');
+    }
+]);
+
 $obRouter->get('/api/v1/questionario/perguntas/{idQuestionario}', [
     'rolePermissao' => [
         'A',
