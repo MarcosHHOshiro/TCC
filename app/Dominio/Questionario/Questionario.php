@@ -231,8 +231,9 @@ class Questionario{
         {
             throw new \Exception("Informe um tipo válido!");
         }
+        
 
-        $this->tipo = $tipo;
+        $this->tipo = mb_strtoupper($tipo);
 
         return $this;
     }
