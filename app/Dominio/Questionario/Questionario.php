@@ -227,11 +227,10 @@ class Questionario{
      */
     public function setTipo($tipo): self
     {
-        if($tipo != "Q" and $tipo != "I")
+        if($tipo != "Q" and $tipo != "C")
         {
             throw new \Exception("Informe um tipo válido!");
         }
-        
 
         $this->tipo = mb_strtoupper($tipo);
 
