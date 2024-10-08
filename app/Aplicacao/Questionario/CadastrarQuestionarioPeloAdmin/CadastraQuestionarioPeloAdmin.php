@@ -50,7 +50,8 @@ class CadastraQuestionarioPeloAdmin
         $repositrioQuestionario->commit();
 
         return [
-            'sucesso' => 'Cadastro realizado com sucesso'
+            'sucesso' => 'Cadastro realizado com sucesso',
+            'id' => $obQuestionario->getIdQuestionario(),
         ];
     }
 }

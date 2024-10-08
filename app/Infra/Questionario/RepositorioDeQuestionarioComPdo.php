@@ -44,6 +44,7 @@ class RepositorioDeQuestionarioComPdo
             'data_inicio' =>  $questionario->getDataInicio(),
             'data_fim' =>  $questionario->getDataFim(), 
             'status' =>  $questionario->getStatus(),
+            'tipo' =>  $questionario->getTipo(),
             'id_profissao' =>  $questionario->getProfissao()->getIdProfissao(),
             'id_escolaridade' =>  $questionario->getEscolaridade()->getIdEscolaridade()
         ]);

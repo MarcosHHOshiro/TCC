@@ -75,7 +75,7 @@ class UsuarioPdo
         $this->db->setTable("tb_usuario");
         $usuarios = $this->db->selectJoinPersonalizavel(
             null,
-            "id_usuario, nome_usuario, email, data_nascimento, sexo, login, status_usuario, id_profissao, id_escolaridade, id_cidade",
+            "id_usuario, nome_usuario, email, data_nascimento, sexo, login, status_usuario, id_profissao, id_escolaridade, id_cidade, permissao",
             null,
             null,
             [],
