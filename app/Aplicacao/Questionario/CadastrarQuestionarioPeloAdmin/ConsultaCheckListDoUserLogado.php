@@ -13,7 +13,7 @@ class ConsultaCheckListDoUserLogado
 
         $repositorio->setTable("tb_questionario");
         $items = $repositorio->selectPadrao("tb_questionario.id_usuario_criou = ? and tipo = 'C'", 
-        "tb_questionario.id_questionario, titulo, tb_questionario.descricao, data_inicio, data_fim, padrao", 
+        "tb_questionario.id_questionario, titulo, tb_questionario.descricao, data_inicio, data_fim, padrao, status", 
         null,
         'tb_questionario.id_questionario',
         [$idUser], null)->fetchAll(PDO::FETCH_ASSOC);

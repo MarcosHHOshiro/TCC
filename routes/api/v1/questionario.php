@@ -48,7 +48,7 @@ $obRouter->get('/api/v1/questionario/doUsuario', [
 
 $obRouter->get('/api/v1/questionario/checklist/doUsuario', [
     'rolePermissao' => [
-        'A',
+        'A', 'C'
     ],
     'middlewares' => [
         'jwt-auth'

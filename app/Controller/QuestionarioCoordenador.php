@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Aplicacao\Questionario\QuestionarioPeloCoordenador\CadastraQuestionarioPeloCoordenador;
+use App\Aplicacao\Questionario\QuestionarioPeloCoordenador\UpdatePergunta;
+use App\Aplicacao\Questionario\QuestionarioPeloCoordenador\UpdateQuestionarioPeloCoordenador;
 use Http\Request;
 
 class QuestionarioCoordenador
@@ -14,4 +16,15 @@ class QuestionarioCoordenador
         return $useCase->executa($request);
     }
 
+    public static function updateQuestionarioPeloCoordenador($request, $idQuestionario)
+    {
+        $useCase = new UpdateQuestionarioPeloCoordenador();
+        return $useCase->executa($request, $idQuestionario);
+    }
+
+    public static function updatePergunta($request)
+    {
+        $useCase = new UpdatePergunta();
+        return $useCase->executa($request);
+    }
 }
