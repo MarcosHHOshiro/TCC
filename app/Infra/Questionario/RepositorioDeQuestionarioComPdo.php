@@ -8,7 +8,7 @@ use DB\DataBase;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 
-class RepositorioDeQuestionarioComPdo 
+class RepositorioDeQuestionarioComPdo
 {
 
     private $db;
@@ -32,21 +32,21 @@ class RepositorioDeQuestionarioComPdo
     {
         $this->db->setTable($table);
     }
-    
+
     public function cadastrar(Questionario $questionario): int
     {
         $this->db->setTable("tb_questionario");
         $idUrl = ($this->db)->insert([
-            'titulo' =>  $questionario->getTitulo(),
-            'descricao' =>  $questionario->getDescricao(),
-            'id_usuario_criou' =>  $questionario->getUsuario()->getIdUsuario(),
-            'padrao' =>  $questionario->getPadrao(),
-            'data_inicio' =>  $questionario->getDataInicio(),
-            'data_fim' =>  $questionario->getDataFim(), 
-            'status' =>  $questionario->getStatus(),
-            'tipo' =>  $questionario->getTipo(),
-            'id_profissao' =>  $questionario->getProfissao()->getIdProfissao(),
-            'id_escolaridade' =>  $questionario->getEscolaridade()->getIdEscolaridade()
+            'titulo' => $questionario->getTitulo(),
+            'descricao' => $questionario->getDescricao(),
+            'id_usuario_criou' => $questionario->getUsuario()->getIdUsuario(),
+            'padrao' => $questionario->getPadrao(),
+            'data_inicio' => $questionario->getDataInicio(),
+            'data_fim' => $questionario->getDataFim(),
+            'status' => $questionario->getStatus(),
+            'tipo' => $questionario->getTipo(),
+            'id_profissao' => $questionario->getProfissao()->getIdProfissao(),
+            'id_escolaridade' => $questionario->getEscolaridade()->getIdEscolaridade()
         ]);
 
         return $idUrl;
@@ -56,10 +56,10 @@ class RepositorioDeQuestionarioComPdo
     {
         $this->db->setTable("tb_perguntas");
         $id = ($this->db)->insert([
-            'descricao' =>  $perguntas->getDescricao(),
-            'id_principio' =>  $perguntas->getIdPrincipio(),
-            'justificativa' =>  $perguntas->getJustificativa(),
-            'id_questionario' =>  $perguntas->getQuestionario()->getIdQuestionario()
+            'descricao' => $perguntas->getDescricao(),
+            'id_principio' => $perguntas->getIdPrincipio(),
+            'justificativa' => $perguntas->getJustificativa(),
+            'id_questionario' => $perguntas->getQuestionario()->getIdQuestionario()
         ]);
 
         return $id;
@@ -69,10 +69,10 @@ class RepositorioDeQuestionarioComPdo
     {
         $jwt = isset($header['Authorization']) ? str_replace('Bearer ', '', $header['Authorization']) : '';
 
-        try{
+        try {
             //decode
-            $decode = (array)JWT::decode($jwt, new Key(getenv('JWT_KEY'), 'HS256'));
-        }catch(\Exception $e){
+            $decode = (array) JWT::decode($jwt, new Key(getenv('JWT_KEY'), 'HS256'));
+        } catch (\Exception $e) {
             throw new \Exception("Token invalido", 403);
         }
         $login = $decode['login'] ?? '';
@@ -93,21 +93,6 @@ class RepositorioDeQuestionarioComPdo
         ], [$idPergunta]);
     }
 
-    public function selectPadrao(string $where = null,string $fields = '*', string $join = null, string $groupBy = null, array $values = null, string $orderBy = null)
-    {
-        $query = $this->db->selectJoinPersonalizavel(
-            $where, 
-            $fields, 
-            $join, 
-            $groupBy, 
-            $values,
-            $orderBy
-        );
-
-        return $query;
-    }
-
-    
     public function updateQuestionario(Questionario $obQuestionario, int $idQuestionario)
     {
         $this->db->setTable("tb_questionario");
@@ -119,5 +104,29 @@ class RepositorioDeQuestionarioComPdo
         ], [$idQuestionario]);
 
         return;
+    }
+
+    public function selectPadrao(string $where = null, string $fields = '*', string $join = null, string $groupBy = null, array $values = null, string $orderBy = null)
+    {
+        $query = $this->db->selectJoinPersonalizavel(
+            $where,
+            $fields,
+            $join,
+            $groupBy,
+            $values,
+            $orderBy
+        );
+
+        return $query;
+    }
+
+    public function insertPadraoSemId(array $array)
+    {
+        return $this->db->insertSemId($array);
+    }
+
+    public function insertPadrao(array $array)
+    {
+        return $this->db->insert($array);
     }
 }

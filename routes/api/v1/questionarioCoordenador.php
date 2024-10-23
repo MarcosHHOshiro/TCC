@@ -47,3 +47,31 @@ $obRouter->patch('/api/v1/questionarioCoordenador/pergunta/update', [
         return new Response(200, QuestionarioCoordenador::updatePergunta($request), 'application/json');
     }
 ]);
+
+$obRouter->get('/api/v1/questionarioCoordenador/consultaAvaliadores', [
+    'rolePermissao' => [
+        'C','A'
+    ],
+    'middlewares' => [
+        // 'jwt-auth'
+        // 'cache'  
+    ],
+    function ($request)
+    {
+        return new Response(200, QuestionarioCoordenador::consulktaAvaliadores($request), 'application/json');
+    }
+]);
+
+$obRouter->get('/api/v1/questionarioCoordenador/vinculaUsuario/questionario', [
+    'rolePermissao' => [
+        'C','A'
+    ],
+    'middlewares' => [
+        // 'jwt-auth'
+        // 'cache'  
+    ],
+    function ($request)
+    {
+        return new Response(200, QuestionarioCoordenador::vinculaUsuarioComQustionario($request), 'application/json');
+    }
+]);

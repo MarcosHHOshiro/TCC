@@ -33,7 +33,7 @@ class UrlPdo
         $this->db->setTable("tb_url");
         $urls = $this->db->selectJoinPersonalizavel(
             null,
-            "url, descricao, tipo_site",
+            "url, descricao, tipo_site, id_url as id",
             null,
             null,
             [],

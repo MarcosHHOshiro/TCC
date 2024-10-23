@@ -37,4 +37,19 @@ class Url{
         $this->descricao = $descricao;
         return $this;
     }
+
+    /**
+     * Get the value of url
+     */
+    public function getUrl() {
+        return $this->url;
+    }
+
+    /**
+     * Set the value of url
+     */
+    public function setUrl($url): self {
+        $this->url = $url;
+        return $this;
+    }
 }

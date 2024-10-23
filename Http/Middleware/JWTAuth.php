@@ -33,9 +33,9 @@ class JWTAuth{
         //busca o usuario pelo login
         $usuario->setTable("tb_usuario");
         $permissao =  $usuario->selectPadrao("login = ?", "permissao", null, null, [$login], null)->fetchColumn();
-         
-        if(!empty($permissao)){
-            if($permissao == $rolePermission[0]){
+        
+        if(!empty($rolePermission)){
+            if(in_array($permissao, $rolePermission)){
                 return true;
             }else{
                 throw new \Exception("Você não tem acesso!");
