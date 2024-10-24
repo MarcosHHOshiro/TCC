@@ -3,7 +3,8 @@
 namespace App\Infra\Questionario;
 
 use App\Dominio\Questionario\Perguntas;
-use app\Dominio\Questionario\Questionario;
+use App\Dominio\Questionario\Questionario;
+use App\Dominio\Url\Url;
 use DB\DataBase;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
@@ -46,6 +47,7 @@ class RepositorioDeQuestionarioComPdo
             'status' => $questionario->getStatus(),
             'tipo' => $questionario->getTipo(),
             'id_profissao' => $questionario->getProfissao()->getIdProfissao(),
+            'id_url' => $questionario->getUrl()->getIdUrl(),
             'id_escolaridade' => $questionario->getEscolaridade()->getIdEscolaridade()
         ]);
 

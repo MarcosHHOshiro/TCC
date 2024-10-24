@@ -4,11 +4,13 @@ namespace App\Aplicacao\Questionario\QuestionarioPeloCoordenador;
 
 use App\Dominio\Questionario\Perguntas;
 use App\Dominio\Questionario\Questionario;
+use App\Dominio\Url\Url;
 use App\Dominio\Usuario\Escolaridade;
 use App\Dominio\Usuario\Profissao;
 use App\Dominio\Usuario\Usuario;
 use App\Infra\Questionario\RepositorioDeQuestionarioComPdo;
 use DateTime;
+use Exception;
 use PDO;
 
 class CadastraQuestionarioPeloCoordenador
@@ -17,12 +19,16 @@ class CadastraQuestionarioPeloCoordenador
     {
         $postVars = $request->getPostVars();
         $headers = $request->getHeaders();
+  
+        $this->verificaSeTemQuestionarioOuCheckListVinculadoAUmaUrl($postVars);
+        
         $repositorioGeral = new RepositorioDeQuestionarioComPdo();
         $obQuestionario = new Questionario;
         $obUsuario = new Usuario;
         $obProfissao = new Profissao;
         $obEscolaridade = new Escolaridade;
         $data = new DateTime();
+        $obUrl = new Url();
 
         $repositorioGeral->setTable('tb_questionario');
 
@@ -44,11 +50,12 @@ class CadastraQuestionarioPeloCoordenador
         $obQuestionario->setStatus($dados[0]['status']);
         $obQuestionario->setUsuario($obUsuario->setIdUsuario($idUsuario));
         $obQuestionario->setProfissao($obProfissao->setIdProfissao(empty($dados[0]['id_profissao']) ? null : $dados[0]['id_profissao']));
+        $obQuestionario->setUrl($obUrl->setIdUrl($postVars['id_url']));
         $obQuestionario->setEscolaridade($obEscolaridade->setIdEscolaridade(empty($dados[0]['id_escolaridade']) ? null : $postVars['id_escolaridade']));
         
         $idQuestionario = $repositrioQuestionario->cadastrar($obQuestionario);
         $obQuestionario->setIdQuestionario($idQuestionario);
-
+        
         foreach($dados as $dado)
         {
             $obPergunta = new Perguntas;
@@ -61,5 +68,18 @@ class CadastraQuestionarioPeloCoordenador
         $repositrioQuestionario->commit();
 
         return["sucesso" => "Cadastro realizado com sucesso!"];  
+    }
+
+    private function verificaSeTemQuestionarioOuCheckListVinculadoAUmaUrl($postVars)
+    {
+        $repositrioQuestionario = new RepositorioDeQuestionarioComPdo;
+        $repositrioQuestionario->setTable("tb_questionario");
+        $temCadastro = $repositrioQuestionario->selectPadrao('tb_url.id_url = ? and tipo = ?',
+        1, 'inner join tb_url on tb_questionario.id_url = tb_url.id_url', null, [$postVars['id_url'], $postVars['tipo_doc']], null)->fetchColumn();
+    
+        if(!empty($temCadastro))
+        {
+            throw new Exception("Já tem um questionario/checklist cadastro para essa url");
+        }
     }
 }

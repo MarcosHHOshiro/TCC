@@ -19,6 +19,7 @@ class Questionario{
 
     private Profissao $profissao;
     private Escolaridade $escolaridade;
+    private Url $url;
 
     /**
      * Get the value of id_questionario
@@ -234,6 +235,27 @@ class Questionario{
 
         $this->tipo = mb_strtoupper($tipo);
 
+        return $this;
+    }
+
+    /**
+     * Get the value of url
+     *
+     * @return Url
+     */
+    public function getUrl(): Url {
+        return $this->url;
+    }
+
+    /**
+     * Set the value of url
+     *
+     * @param Url $url
+     *
+     * @return self
+     */
+    public function setUrl(Url $url): self {
+        $this->url = $url;
         return $this;
     }
 }
