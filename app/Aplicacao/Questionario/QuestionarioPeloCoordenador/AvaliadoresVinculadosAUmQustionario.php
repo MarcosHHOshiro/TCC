@@ -8,34 +8,41 @@ use PDO;
 
 class AvaliadoresVinculadosAUmQustionario
 {
-    public function executa($request, $idQuestionario)
+    public function executa($request, $idUrl)
     {
         $postVars = $request->getPostVars();
 
         $repositorioGeral = new RepositorioDeQuestionarioComPdo();
 
         $repositorioGeral->setTable("rl_acesso_questionario");
-        $questionario = $repositorioGeral->selectPadrao(
-            "tb_questionario.id_questionario = ?",
-            "tb_questionario.id_questionario,
+        $dados = $repositorioGeral->selectPadrao(
+            "tb_url.id_url = ?",
+            "tb_url.id_url, 
+            (SELECT id_questionario from tb_questionario as tb_questionario where tb_questionario.id_url = tb_url.id_url and tipo = 'Q') as id_questionario,
+            (SELECT id_questionario from tb_questionario as tb_questionario where tb_questionario.id_url = tb_url.id_url and tipo = 'C') as id_checklist,
             json_agg(
          json_build_object(
 			 'nome_usuario', nome_usuario,
 		 	'id_usuario', tb_usuario.id_usuario
 		 )) as usuarios",
 
-            "inner join tb_questionario on rl_acesso_questionario.id_questionario = tb_questionario.id_questionario
+            "inner join tb_url on rl_acesso_questionario.id_url = tb_url.id_url
         inner join tb_usuario on rl_acesso_questionario.id_usuario = tb_usuario.id_usuario",
 
-            'tb_questionario.id_questionario',
-            [$idQuestionario],
+            'tb_url.id_url',
+            [$idUrl],
             null
         )->fetchAll(PDO::FETCH_ASSOC);
 
-        if (empty($questionario)) {
+        if (empty($dados)) {
             throw new Exception("Sem cadastro para essa consulta!");
         }
 
-        return $questionario;
+        foreach($dados as &$dado)
+        {
+            $dado['usuarios'] = json_decode($dado['usuarios'], true);
+        }
+
+        return $dados;
     }
 }

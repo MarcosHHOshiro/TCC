@@ -16,9 +16,9 @@ class CadastroAcessoQuestionario
         $repositorioGeral->beginTransaction();
         foreach ($postVars['usuarios'] as $usuario) {
             $repositorioGeral->setTable("rl_acesso_questionario");
-            $verificaSeJaTemCadastro = $repositorioGeral->selectPadrao("rl_acesso_questionario.id_usuario = ? and id_questionario = ?", "nome_usuario", 
+            $verificaSeJaTemCadastro = $repositorioGeral->selectPadrao("rl_acesso_questionario.id_usuario = ? and id_url = ?", "nome_usuario", 
             'inner join tb_usuario on rl_acesso_questionario.id_usuario = tb_usuario.id_usuario', null, 
-            [$usuario, $postVars['id_questionario']], null)->fetchColumn();
+            [$usuario, $postVars['id_url']], null)->fetchColumn();
             
             if(!empty($verificaSeJaTemCadastro))
             {
@@ -26,7 +26,7 @@ class CadastroAcessoQuestionario
             }
 
             $usuarios = $repositorioGeral->insertPadrao([
-                'id_questionario' => $postVars['id_questionario'],
+                'id_url' => $postVars['id_url'],
                 'id_usuario' => $usuario
             ]);
         }

@@ -75,7 +75,7 @@ $obRouter->post('/api/v1/questionarioCoordenador/vinculaUsuario/questionario', [
     }
 ]);
 
-$obRouter->get('/api/v1/questionarioCoordenador/usuariosVinculadosAoQuestinario/{idQuestionario}', [
+$obRouter->get('/api/v1/questionarioCoordenador/usuariosVinculadosAoQuestinario/{idURL}', [
     'rolePermissao' => [
         'C',
         'A'
@@ -84,7 +84,7 @@ $obRouter->get('/api/v1/questionarioCoordenador/usuariosVinculadosAoQuestinario/
         // 'jwt-auth'
         // 'cache'  
     ],
-    function ($request, $idQuestionario) {
-        return new Response(200, QuestionarioCoordenador::consultaQuaisAvaliadoresTemAcessoAoQuestionairo($request, $idQuestionario), 'application/json');
+    function ($request, $idURL) {
+        return new Response(200, QuestionarioCoordenador::consultaQuaisAvaliadoresTemAcessoAoQuestionairo($request, $idURL), 'application/json');
     }
 ]);

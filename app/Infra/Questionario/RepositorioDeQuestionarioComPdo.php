@@ -131,4 +131,10 @@ class RepositorioDeQuestionarioComPdo
     {
         return $this->db->insert($array);
     }
+
+    public function selectQueryCompleta(string $query, array $values)
+    {
+        return $this->db->selectQueryCompleta($query, $values);
+    }
+
 }

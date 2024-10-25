@@ -130,7 +130,7 @@ class DataBase
         $binds = array_pad([], count($fields), '?'); //array_pad(Array inicial de valores para ser preenchido, Nova tamanho do array, Valor para preencher se input é menor que length)
 
         //MOSNTA A QUERY
-        $query  = 'INSERT INTO ' . $this->table . ' (' . implode(',', $fields) . ') VALUES (' . implode(',', $binds) . ')';
+        $query = 'INSERT INTO ' . $this->table . ' (' . implode(',', $fields) . ') VALUES (' . implode(',', $binds) . ')';
 
         $params = array_values($values);
         // echo "<pre>";
@@ -150,7 +150,7 @@ class DataBase
         $binds = array_pad([], count($fields), '?'); //array_pad(Array inicial de valores para ser preenchido, Nova tamanho do array, Valor para preencher se input é menor que length)
 
         //MOSNTA A QUERY
-        $query  = 'INSERT INTO ' . $this->table . ' (' . implode(',', $fields) . ') VALUES (' . implode(',', $binds) . ')';
+        $query = 'INSERT INTO ' . $this->table . ' (' . implode(',', $fields) . ') VALUES (' . implode(',', $binds) . ')';
 
         // echo "<pre>";
         // print_r($query);
@@ -176,7 +176,7 @@ class DataBase
         // print_r($where);
         $where = isset($where) ? 'WHERE ' . $where : '';
         $order = isset($order) ? 'ORDER BY ' . $order : '';
-        $limit = isset($limit) ?  'LIMIT ' . $limit : '';
+        $limit = isset($limit) ? 'LIMIT ' . $limit : '';
 
         $query = 'SELECT ' . $fields . ' FROM ' . $this->table . ' ' . $where . ' ' . $order . ' ' . $limit;
 
@@ -200,7 +200,7 @@ class DataBase
     {
         $where = isset($where) ? 'WHERE ' . $where : '';
         $order = isset($order) ? 'ORDER BY ' . $order : '';
-        $limit = isset($limit) ?  'LIMIT ' . $limit : '';
+        $limit = isset($limit) ? 'LIMIT ' . $limit : '';
 
         $query = 'SELECT ' . $fields . ' FROM ' . $this->table . ' ' . $where . ' ' . $order . ' ' . $limit;
 
@@ -341,5 +341,21 @@ class DataBase
 
         //RETORNA SUCESSO
         return true;
+    }
+
+    /**
+     * Consulta de joins
+     *
+     * @param string $query
+     * @param array $values
+     */
+    public function selectQueryCompleta(string $query, array $values)
+    {
+        // echo "<pre>";
+        // print_r($query);
+        // echo "</pre>";
+        // exit;
+
+        return $this->execute($query, $values);
     }
 }

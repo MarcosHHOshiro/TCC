@@ -43,9 +43,9 @@ class QuestionarioCoordenador
         return $useCase->executa($request);
     }
 
-    public static function consultaQuaisAvaliadoresTemAcessoAoQuestionairo($request, $idQuestionario)
+    public static function consultaQuaisAvaliadoresTemAcessoAoQuestionairo($request, $idUrl)
     {
         $useCase = new AvaliadoresVinculadosAUmQustionario();
-        return $useCase->executa($request, $idQuestionario);
+        return $useCase->executa($request, $idUrl);
     }
 }
