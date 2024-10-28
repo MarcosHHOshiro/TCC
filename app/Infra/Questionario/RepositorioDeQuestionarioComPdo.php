@@ -108,6 +108,13 @@ class RepositorioDeQuestionarioComPdo
         return;
     }
 
+    public function inserPadrao(array $values)
+    {
+        $id = ($this->db)->insert($values);
+
+        return $id;
+    }
+
     public function selectPadrao(string $where = null, string $fields = '*', string $join = null, string $groupBy = null, array $values = null, string $orderBy = null)
     {
         $query = $this->db->selectJoinPersonalizavel(

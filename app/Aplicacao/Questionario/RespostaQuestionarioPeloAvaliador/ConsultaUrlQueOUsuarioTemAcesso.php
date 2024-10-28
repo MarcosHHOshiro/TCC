@@ -17,6 +17,7 @@ class ConsultaUrlQueOUsuarioTemAcesso
 
         $idUsuario = $repositorioGeral->pegaIdUsuarioLogado($header);
         $dados = $repositorioGeral->selectQueryCompleta("SELECT tb_url.id_url, url, data_inicio, data_fim,
+        respondeu_questionario, respondeu_checklist,
         (SELECT id_questionario from tb_questionario as tb_questionario where tb_questionario.id_url = tb_url.id_url and tipo = 'Q') as id_questionario,
         (SELECT id_questionario from tb_questionario as tb_questionario where tb_questionario.id_url = tb_url.id_url and tipo = 'C') as id_checklist
         from tb_url
