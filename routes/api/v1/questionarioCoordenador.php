@@ -116,3 +116,17 @@ $obRouter->get('/api/v1/questionarioCoordenador/consultaChecklistDoCoodenador', 
         return new Response(200, QuestionarioCoordenador::consultaCheckListDoCoordenador($request), 'application/json');
     }
 ]);
+
+$obRouter->get('/api/v1/questionarioCoordenador/consultaPerguntas/{idQuestionario}', [
+    'rolePermissao' => [
+        'C',
+        'A'
+    ],
+    'middlewares' => [
+        // 'jwt-auth'
+        // 'cache'  
+    ],
+    function ($request, $idQuestionario) {
+        return new Response(200, QuestionarioCoordenador::consultaPerguntasDeUmQuestionario($request, $idQuestionario), 'application/json');
+    }
+]);
