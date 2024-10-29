@@ -20,7 +20,6 @@ class QuestionarioAvaliador
         return $useCase->executa($request);
     }
     
-
     public static function respondePerguntaQuestionario($request)
     {
         $useCase = new CadastraRespostaQuestionario();
