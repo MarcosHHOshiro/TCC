@@ -30,19 +30,26 @@ class CadastraQuestionarioPeloCoordenador
         $repositorioGeral->setTable('tb_questionario');
         $dados = $repositorioGeral->selectPadrao(
             "tb_questionario.padrao = true and status = 'A' ",
-            "*",
+            "tb_questionario.*, 
+            json_agg(json_build_object(
+                'descricao', tb_perguntas.descricao,
+                'id_principio', id_principio,
+                'justificativa', justificativa
+            )) as perguntas",
             "inner join tb_perguntas on tb_questionario.id_questionario = tb_perguntas.id_questionario
             LEFT JOIN tb_url ON tb_questionario.id_url = tb_url.id_url",
-            null,
+            "tb_questionario.id_questionario",
             []
         )->fetchAll(PDO::FETCH_ASSOC);
 
         $repositrioQuestionario = new RepositorioDeQuestionarioComPdo;
         $repositrioQuestionario->beginTransaction();
 
-        foreach ($dados as $dado) {
+        foreach ($dados as &$dado) {
             $jaCadastrou = $this->verificaSeTemQuestionarioOuCheckListVinculadoAUmaUrl($postVars, $dado);
             
+            $dado['perguntas'] = json_decode($dado['perguntas'], true);
+
             if ($jaCadastrou == 0) {
                 $data = new DateTime();
                 $data = $data->format('Y-m-d');
@@ -63,10 +70,12 @@ class CadastraQuestionarioPeloCoordenador
                 $idQuestionario = $repositrioQuestionario->cadastrar($obQuestionario);
                 $obQuestionario->setIdQuestionario($idQuestionario);
 
-                foreach ($dados as $dado) {
+                foreach ($dado['perguntas'] as $pergunta) {
+
                     $obPergunta = new Perguntas;
-                    $obPergunta->setDescricao($dado['descricao']);
-                    $obPergunta->setIdPrincipio($dado['id_principio']);
+                    $obPergunta->setDescricao($pergunta['descricao']);
+                    $obPergunta->setIdPrincipio($pergunta['id_principio']);
+                    $obPergunta->setJustificativa($pergunta['justificativa']);
                     $obPergunta->setQuestionario($obQuestionario);
                     $repositrioQuestionario->cadastrarPerguntas($obPergunta);
                 }
