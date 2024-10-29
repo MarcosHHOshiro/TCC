@@ -9,10 +9,9 @@ class ConsultaUrl
 {
     public function executa(Request $request) : array
     {
-        $postVars = $request->getPostVars();
         // $obUrl = new Url();
 
         $useCase = new UrlPdo();
-        return $useCase->selectPadrao();
+        return $useCase->selectPadrao($request);
     }
 }

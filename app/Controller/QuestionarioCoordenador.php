@@ -6,6 +6,8 @@ use App\Aplicacao\Questionario\QuestionarioPeloCoordenador\AvaliadoresVinculados
 use App\Aplicacao\Questionario\QuestionarioPeloCoordenador\CadastraQuestionarioPeloCoordenador;
 use App\Aplicacao\Questionario\QuestionarioPeloCoordenador\CadastroAcessoQuestionario;
 use App\Aplicacao\Questionario\QuestionarioPeloCoordenador\ConsultaAvaliadores;
+use App\Aplicacao\Questionario\QuestionarioPeloCoordenador\ConsultaChecklistDoCoordenador;
+use App\Aplicacao\Questionario\QuestionarioPeloCoordenador\ConsultaQuestionariosDoCoordenador;
 use App\Aplicacao\Questionario\QuestionarioPeloCoordenador\UpdatePergunta;
 use App\Aplicacao\Questionario\QuestionarioPeloCoordenador\UpdateQuestionarioPeloCoordenador;
 use Http\Request;
@@ -47,5 +49,17 @@ class QuestionarioCoordenador
     {
         $useCase = new AvaliadoresVinculadosAUmQustionario();
         return $useCase->executa($request, $idUrl);
+    }
+
+    public static function consultaQuestionarioDoCoordenador($request)
+    {
+        $useCase = new ConsultaQuestionariosDoCoordenador;
+        return $useCase->executa($request);
+    }
+
+    public static function consultaCheckListDoCoordenador($request)
+    {
+        $useCase = new ConsultaChecklistDoCoordenador;
+        return $useCase->executa($request);
     }
 }

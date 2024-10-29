@@ -16,7 +16,7 @@ class ConsultaPerguntasDeUmQuestionario
 
         $repositorioGeral->setTable("tb_perguntas");
         $questionarios = $repositorioGeral->selectPadrao("tb_perguntas.id_questionario = ?",
-        "tb_perguntas.id_pergunta, descricao, justificativa, id_resposta", 
+        "tb_perguntas.id_pergunta, tb_perguntas.descricao, justificativa, id_resposta", 
         "left join tb_resposta on tb_perguntas.id_pergunta = tb_resposta.id_pergunta",
         null, [$idQuestionario], null)->fetchAll(PDO::FETCH_ASSOC);
 

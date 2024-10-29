@@ -14,7 +14,7 @@ class ConsultaAvaliadores
         $repositorioGeral = new RepositorioDeQuestionarioComPdo();
 
         $repositorioGeral->setTable("tb_usuario");
-        $usuarios = $repositorioGeral->selectPadrao("permissao = 'A'", "id_usuario, nome_usuario, permissao", null, null, [], null)->fetchAll(PDO::FETCH_ASSOC);
+        $usuarios = $repositorioGeral->selectPadrao("permissao = 'U'", "id_usuario, nome_usuario, permissao", null, null, [], null)->fetchAll(PDO::FETCH_ASSOC);
     
         return $usuarios;
     }

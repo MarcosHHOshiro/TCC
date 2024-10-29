@@ -61,7 +61,7 @@ $obRouter->get('/api/v1/questionarioCoordenador/consultaAvaliadores', [
     }
 ]);
 
-$obRouter->post('/api/v1/questionarioCoordenador/vinculaUsuario/questionario', [
+$obRouter->post('/api/v1/questionarioCoordenador/vinculaUsuario', [
     'rolePermissao' => [
         'C',
         'A'
@@ -86,5 +86,33 @@ $obRouter->get('/api/v1/questionarioCoordenador/usuariosVinculadosAoQuestinario/
     ],
     function ($request, $idURL) {
         return new Response(200, QuestionarioCoordenador::consultaQuaisAvaliadoresTemAcessoAoQuestionairo($request, $idURL), 'application/json');
+    }
+]);
+
+$obRouter->get('/api/v1/questionarioCoordenador/consultaQuestionariosDoCoodenador', [
+    'rolePermissao' => [
+        'C',
+        'A'
+    ],
+    'middlewares' => [
+        // 'jwt-auth'
+        // 'cache'  
+    ],
+    function ($request) {
+        return new Response(200, QuestionarioCoordenador::consultaQuestionarioDoCoordenador($request), 'application/json');
+    }
+]);
+
+$obRouter->get('/api/v1/questionarioCoordenador/consultaChecklistDoCoodenador', [
+    'rolePermissao' => [
+        'C',
+        'A'
+    ],
+    'middlewares' => [
+        // 'jwt-auth'
+        // 'cache'  
+    ],
+    function ($request) {
+        return new Response(200, QuestionarioCoordenador::consultaCheckListDoCoordenador($request), 'application/json');
     }
 ]);

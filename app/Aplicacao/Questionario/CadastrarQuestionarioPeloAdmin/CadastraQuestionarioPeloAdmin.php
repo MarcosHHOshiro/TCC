@@ -4,6 +4,7 @@ namespace App\Aplicacao\Questionario\CadastrarQuestionarioPeloAdmin;
 
 use App\Dominio\Questionario\Perguntas;
 use App\Dominio\Questionario\Questionario;
+use App\Dominio\Url\Url;
 use App\Dominio\Usuario\Escolaridade;
 use App\Dominio\Usuario\Profissao;
 use App\Dominio\Usuario\Usuario;
@@ -25,6 +26,7 @@ class CadastraQuestionarioPeloAdmin
         $obUsuario = new Usuario;
         $obProfissao = new Profissao;
         $obEscolaridade = new Escolaridade;
+        $obUrl = new Url;
 
         $repositrioQuestionario->beginTransaction();
         $obQuestionario->setTitulo($postVars['titulo']);
@@ -37,10 +39,31 @@ class CadastraQuestionarioPeloAdmin
         $obQuestionario->setUsuario($obUsuario->setIdUsuario($idUsuario));
         $obQuestionario->setProfissao($obProfissao->setIdProfissao(empty($postVars['id_profissao']) ? null : $postVars['id_profissao']));
         $obQuestionario->setEscolaridade($obEscolaridade->setIdEscolaridade(empty($postVars['id_escolaridade']) ? null : $postVars['id_escolaridade']));
-        
+        $obQuestionario->setUrl($obUrl);
+
         $idQuestionario = $repositrioQuestionario->cadastrar($obQuestionario);
         $obQuestionario->setIdQuestionario($idQuestionario);
-        
+
+        if ($postVars['tipo'] == 'Q') {
+            $repositrioQuestionario->updatePadrao(
+                "padrao = true and id_questionario !=? and tipo = 'Q'",
+                [
+                    'status' => 'I'
+                ],
+                [$idQuestionario]
+            );
+        }
+
+        if ($postVars['tipo'] == 'C') {
+            $repositrioQuestionario->updatePadrao(
+                "padrao = true and id_questionario !=? and tipo = 'C'",
+                [
+                    'status' => 'I'
+                ],
+                [$idQuestionario]
+            );
+        }
+
         $obPergunta = new Perguntas;
         $obPergunta->setDescricao($postVars['perguntas'][0]['pergunta']);
         $obPergunta->setIdPrincipio($postVars['perguntas'][0]['principio']);

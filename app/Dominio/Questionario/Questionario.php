@@ -16,7 +16,6 @@ class Questionario{
     private $data_fim;
     private $status;
     private $tipo;
-
     private Profissao $profissao;
     private Escolaridade $escolaridade;
     private Url $url;
@@ -240,22 +239,19 @@ class Questionario{
 
     /**
      * Get the value of url
-     *
-     * @return Url
      */
-    public function getUrl(): Url {
+    public function getUrl(): Url
+    {
         return $this->url;
     }
 
     /**
      * Set the value of url
-     *
-     * @param Url $url
-     *
-     * @return self
      */
-    public function setUrl(Url $url): self {
+    public function setUrl(Url $url): self
+    {
         $this->url = $url;
+
         return $this;
     }
 }

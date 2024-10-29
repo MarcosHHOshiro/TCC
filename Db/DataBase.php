@@ -346,8 +346,7 @@ class DataBase
     /**
      * Consulta de joins
      *
-     * @param string $query
-     * @param array $values
+     * @return PDOStatement
      */
     public function selectQueryCompleta(string $query, array $values)
     {

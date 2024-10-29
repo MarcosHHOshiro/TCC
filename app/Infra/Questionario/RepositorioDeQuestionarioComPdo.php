@@ -129,6 +129,13 @@ class RepositorioDeQuestionarioComPdo
         return $query;
     }
 
+    public function updatePadrao(string $where, array $values, array $valoresWhere)
+    {
+        $query = $this->db->update2($where, $values, $valoresWhere);
+
+        return $query;
+    }
+
     public function insertPadraoSemId(array $array)
     {
         return $this->db->insertSemId($array);

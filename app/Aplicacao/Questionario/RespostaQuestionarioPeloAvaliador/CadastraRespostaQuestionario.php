@@ -10,6 +10,15 @@ class CadastraRespostaQuestionario
     {
         $postVars = $request->getPostVars();
         $headers = $request->getHeaders();
+
+        if(empty($postVars['data_inicio']))
+        {
+            throw new \Exception("Informe a data de inicio!");
+        }
+        if(empty($postVars['data_fim']))
+        {
+            throw new \Exception("Informe a data de fim!");
+        }
         
         $repositorioGeral = new RepositorioDeQuestionarioComPdo();
         $idUsuario = $repositorioGeral->pegaIdUsuarioLogado($headers);

@@ -32,7 +32,7 @@ $obRouter->post('/api/v1/questionario/pergunta', [
     }
 ]);
 
-$obRouter->get('/api/v1/questionario/doUsuario', [
+$obRouter->get('/api/v1/questionario/doUsuario', [ //adm ve tudo
     'rolePermissao' => [
         'A',
     ],

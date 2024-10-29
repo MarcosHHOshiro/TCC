@@ -9,14 +9,14 @@ class ConsultaQuestionariosDoUserLogado
     public function executa($request)
     {
         $repositorio = new RepositorioDeQuestionarioComPdo();
-        $idUser = $repositorio->pegaIdUsuarioLogado($request->getHeaders());
+        // $idUser = $repositorio->pegaIdUsuarioLogado($request->getHeaders());
 
         $repositorio->setTable("tb_questionario");
-        $items = $repositorio->selectPadrao("tb_questionario.id_usuario_criou = ? and tipo = 'Q'", 
+        $items = $repositorio->selectPadrao("tipo = 'Q'", 
         "tb_questionario.id_questionario, titulo, tb_questionario.descricao, data_inicio, data_fim, padrao, status", 
         null,
         'tb_questionario.id_questionario',
-        [$idUser], null)->fetchAll(PDO::FETCH_ASSOC);
+        [], null)->fetchAll(PDO::FETCH_ASSOC);
 
         if(empty($items)){
             throw new \Exception("Sem cadastro para essa consulta", 200);
