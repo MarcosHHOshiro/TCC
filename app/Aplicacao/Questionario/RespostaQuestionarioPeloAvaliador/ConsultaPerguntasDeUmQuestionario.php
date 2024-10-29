@@ -22,11 +22,11 @@ class ConsultaPerguntasDeUmQuestionario
 
         foreach($questionarios as &$questionario)
         {
-            if(!empty($questionario['id_pergunta']))
+            if(!empty($questionario['id_resposta']))
             {
-                $questionario['respondido'] = 0; 
-            }else{
                 $questionario['respondido'] = 1; 
+            }else{
+                $questionario['respondido'] = 0; 
             }
         }
 
