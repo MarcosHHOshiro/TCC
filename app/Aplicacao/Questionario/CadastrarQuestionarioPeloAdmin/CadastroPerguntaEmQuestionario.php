@@ -17,7 +17,7 @@ class CadastroPerguntaEmQuestionario
         $obPergunta->setDescricao($postVars['pergunta']);
         $obPergunta->setJustificativa($postVars['justificativa']);
         $obPergunta->setQuestionario($obQuestionario->setIdQuestionario($postVars['id_questionario']));
-        $obPergunta->setIdPrincipio($postVars['principio']);
+        $obPergunta->setIdPrincipio(empty($postVars['principio'])? null :$postVars['principio']);
 
         $repositorio->cadastrarPerguntas($obPergunta);
 
