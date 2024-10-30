@@ -23,7 +23,7 @@ class ConsultaPerguntasQuestionario
 	    'justificativa', tb_perguntas.justificativa, 
 	    'principio', tb_principio.descricao)) as perguntas",
             "INNER JOIN tb_perguntas ON tb_questionario.id_questionario = tb_perguntas.id_questionario
-        INNER JOIN tb_principio ON tb_perguntas.id_principio = tb_principio.id_principio",
+        LEFT JOIN tb_principio ON tb_perguntas.id_principio = tb_principio.id_principio",
             'tb_questionario.id_questionario',
             [$idQuestionario],
             null
