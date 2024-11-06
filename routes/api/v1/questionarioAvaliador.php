@@ -32,6 +32,31 @@ $obRouter->post('/api/v1/questionarioAvaliador/respondePergunta', [
     }
 ]);
 
+$obRouter->get('/api/v1/questionarioAvaliador/veTodasPerguntasRespondidas/{idQuestionario}', [
+    'rolePermissao' => [
+        'U',
+    ],
+    'middlewares' => [
+        // 'jwt-auth'
+        // 'cache'  
+    ],
+    function ($request, $idQuestionario) {
+        return new Response(200, QuestionarioAvaliador::consultaTodasAsPerguntasAposResponder($request, $idQuestionario), 'application/json');
+    }
+]);
+
+$obRouter->patch('/api/v1/questionarioAvaliador/updateResposta/{idPergunta}', [
+    'rolePermissao' => [
+        'U',
+    ],
+    'middlewares' => [
+        // 'jwt-auth'
+        // 'cache'  
+    ],
+    function ($request, $idPergunta) {
+        return new Response(200, QuestionarioAvaliador::updateResposta($request, $idPergunta), 'application/json');
+    }
+]);
 
 $obRouter->get('/api/v1/questionarioAvaliador/{idQuestionario}', [
     'rolePermissao' => [
@@ -45,3 +70,4 @@ $obRouter->get('/api/v1/questionarioAvaliador/{idQuestionario}', [
         return new Response(200, QuestionarioAvaliador::consultaPerguntasDeUmQuestionario($request, $idQuestionario), 'application/json');
     }
 ]);
+
