@@ -15,6 +15,7 @@ class UpdateQuestionario
         $obQuestionario->setDescricao($postVars['descricao']);
         $obQuestionario->setDataFim($postVars['data_fim']);
         $obQuestionario->setStatus($postVars['status']);
+        $obQuestionario->setPadrao($postVars['padrao']);
 
         $repositorio = new RepositorioDeQuestionarioComPdo();
         $repositorio->updateQuestionario($obQuestionario, $idQuestionario);

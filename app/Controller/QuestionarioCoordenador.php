@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Aplicacao\Questionario\QuestionarioPeloCoordenador\AvaliadoresVinculadosAUmQustionario;
+use App\Aplicacao\Questionario\QuestionarioPeloCoordenador\CadastraPerguntaQuestionarioPeloCoordenador;
 use App\Aplicacao\Questionario\QuestionarioPeloCoordenador\CadastraQuestionarioPeloCoordenador;
 use App\Aplicacao\Questionario\QuestionarioPeloCoordenador\CadastroAcessoQuestionario;
 use App\Aplicacao\Questionario\QuestionarioPeloCoordenador\ConsultaAvaliadores;
@@ -23,6 +24,12 @@ class QuestionarioCoordenador
         return $useCase->executa($request);
     }
 
+    public static function cadastroPerguntaQuestionarioPeloCoordenador($request)
+    {
+        $useCase = new CadastraPerguntaQuestionarioPeloCoordenador();
+        return $useCase->executa($request);
+    }
+
     public static function updateQuestionarioPeloCoordenador($request, $idQuestionario)
     {
         $useCase = new UpdateQuestionarioPeloCoordenador();
@@ -35,10 +42,10 @@ class QuestionarioCoordenador
         return $useCase->executa($request);
     }
 
-    public static function consulktaAvaliadores($request)
+    public static function consulktaAvaliadores($request, $idUrl)
     {
         $useCase = new ConsultaAvaliadores();
-        return $useCase->executa($request);
+        return $useCase->executa($request, $idUrl);
     }
 
     public static function vinculaUsuarioComQustionario($request)

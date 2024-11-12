@@ -102,7 +102,8 @@ class RepositorioDeQuestionarioComPdo
             'titulo' => $obQuestionario->getTitulo(),
             'descricao' => $obQuestionario->getDescricao(),
             'data_fim' => $obQuestionario->getDataFim(),
-            'status' => $obQuestionario->getStatus()
+            'status' => $obQuestionario->getStatus(),
+            'padrao' => $obQuestionario->getPadrao()
         ], [$idQuestionario]);
 
         return;

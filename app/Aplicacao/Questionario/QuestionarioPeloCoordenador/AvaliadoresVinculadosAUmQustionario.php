@@ -23,7 +23,9 @@ class AvaliadoresVinculadosAUmQustionario
             json_agg(
          json_build_object(
 			 'nome_usuario', nome_usuario,
-		 	'id_usuario', tb_usuario.id_usuario
+		 	'id_usuario', tb_usuario.id_usuario,
+		 	'cidade', tb_usuario.cidade,
+		 	'estado', tb_usuario.estado
 		 )) as usuarios",
 
             "inner join tb_url on rl_acesso_questionario.id_url = tb_url.id_url

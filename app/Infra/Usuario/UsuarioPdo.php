@@ -59,6 +59,8 @@ class UsuarioPdo
             // 'login' => $obUsuario->getLogin(),
             // 'senha' => $obUsuario->getSenha(),
             'status_usuario' => $obUsuario->getStatusUsuario(),
+            'estado' => $obUsuario->getEstado(),
+            'cidade' => $obUsuario->getCidade(),
         ];
 
         $valoresWhere = [
@@ -77,7 +79,8 @@ class UsuarioPdo
         $this->db->setTable("tb_usuario");
         $usuarios = $this->db->selectJoinPersonalizavel(
             null,
-            "id_usuario, nome_usuario, email, data_nascimento, sexo, login, status_usuario, id_profissao, id_escolaridade, id_cidade, permissao",
+            "id_usuario, nome_usuario, email, data_nascimento, sexo, login, status_usuario, 
+            id_profissao, id_escolaridade, id_cidade, permissao, cidade, estado",
             null,
             null,
             [],

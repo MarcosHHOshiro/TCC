@@ -19,6 +19,19 @@ $obRouter->post('/api/v1/questionarioCoordenador', [
     }
 ]);
 
+$obRouter->post('/api/v1/questionarioCoordenador/cadastroPerguntas', [
+    'rolePermissao' => [
+        'C',
+    ],
+    'middlewares' => [
+        // 'jwt-auth'
+        // 'cache'  
+    ],
+    function ($request) {
+        return new Response(200, QuestionarioCoordenador::cadastroPerguntaQuestionarioPeloCoordenador($request), 'application/json');
+    }
+]);
+
 $obRouter->patch('/api/v1/questionarioCoordenador/update/{idQuestionario}', [
     'rolePermissao' => [
         'C',
@@ -47,7 +60,7 @@ $obRouter->patch('/api/v1/questionarioCoordenador/pergunta/update', [
     }
 ]);
 
-$obRouter->get('/api/v1/questionarioCoordenador/consultaAvaliadores', [
+$obRouter->get('/api/v1/questionarioCoordenador/consultaAvaliadores/{idUrl}', [
     'rolePermissao' => [
         'C',
         'A'
@@ -56,8 +69,8 @@ $obRouter->get('/api/v1/questionarioCoordenador/consultaAvaliadores', [
         // 'jwt-auth'
         // 'cache'  
     ],
-    function ($request) {
-        return new Response(200, QuestionarioCoordenador::consulktaAvaliadores($request), 'application/json');
+    function ($request, $idUrl) {
+        return new Response(200, QuestionarioCoordenador::consulktaAvaliadores($request, $idUrl), 'application/json');
     }
 ]);
 

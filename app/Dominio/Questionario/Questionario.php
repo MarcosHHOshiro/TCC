@@ -5,6 +5,7 @@ use app\Dominio\Url\Url;
 use app\Dominio\Usuario\Escolaridade;
 use app\Dominio\Usuario\Profissao;
 use app\Dominio\Usuario\Usuario;
+use Exception;
 
 class Questionario{
     private $id_questionario;
@@ -87,6 +88,10 @@ class Questionario{
      */
     public function setPadrao($padrao): self
     {
+        if($padrao != 1 && $padrao != 0)
+        {
+            throw new Exception("Informes valores válidos!");
+        }
         $this->padrao = $padrao;
 
         return $this;
