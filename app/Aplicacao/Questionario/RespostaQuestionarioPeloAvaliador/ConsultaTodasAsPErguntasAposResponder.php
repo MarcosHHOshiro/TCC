@@ -30,6 +30,11 @@ class ConsultaTodasAsPErguntasAposResponder
                 group by tb_questionario.id_questionario
                 ", [$idUsuarioLogado, $idQuestionario])->fetch(PDO::FETCH_ASSOC);
 
+        if(empty($dados))
+        {
+            throw new \Exception("Sem cadastro para essa consulta!");
+        }
+
         $dados['perguntas'] = json_decode($dados['perguntas'],  true);
 
         return  $dados;

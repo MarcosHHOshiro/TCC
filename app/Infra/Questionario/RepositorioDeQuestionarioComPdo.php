@@ -59,7 +59,7 @@ class RepositorioDeQuestionarioComPdo
         $this->db->setTable("tb_perguntas");
         $id = ($this->db)->insert([
             'descricao' => $perguntas->getDescricao(),
-            'id_principio' => $perguntas->getIdPrincipio(),
+            // 'id_principio' => $perguntas->getIdPrincipio(),
             'justificativa' => $perguntas->getJustificativa(),
             'id_questionario' => $perguntas->getQuestionario()->getIdQuestionario()
         ]);
@@ -90,7 +90,7 @@ class RepositorioDeQuestionarioComPdo
         $this->db->setTable("tb_perguntas");
         $this->db->update2("id_pergunta = ?", [
             'descricao' => $obPergunta->getDescricao(),
-            'id_principio' => $obPergunta->getIdPrincipio(),
+            // 'id_principio' => $obPergunta->getIdPrincipio(),
             'justificativa' => $obPergunta->getJustificativa(),
         ], [$idPergunta]);
     }

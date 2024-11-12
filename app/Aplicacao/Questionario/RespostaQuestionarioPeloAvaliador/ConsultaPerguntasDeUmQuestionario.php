@@ -20,6 +20,11 @@ class ConsultaPerguntasDeUmQuestionario
         "left join tb_resposta on tb_perguntas.id_pergunta = tb_resposta.id_pergunta",
         null, [$idQuestionario], null)->fetchAll(PDO::FETCH_ASSOC);
 
+        if(empty($questionarios))
+        {
+            throw new Exception("Sem cadastro para essa consulta!");
+        }
+
         foreach($questionarios as &$questionario)
         {
             if(!empty($questionario['id_resposta']))

@@ -8,7 +8,7 @@ class Perguntas
     private Questionario $questionario;
     private $descricao;
     private $justificativa;
-    private $id_principio;
+    // private $id_principio;
 
     /**
      * Get the value of id_pergunta
@@ -64,23 +64,23 @@ class Perguntas
         return $this;
     }
 
-    /**
-     * Get the value of id_principio
-     */
-    public function getIdPrincipio()
-    {
-        return $this->id_principio;
-    }
+    // /**
+    //  * Get the value of id_principio
+    //  */
+    // public function getIdPrincipio()
+    // {
+    //     return $this->id_principio;
+    // }
 
-    /**
-     * Set the value of id_principio
-     */
-    public function setIdPrincipio($id_principio): self
-    {
-        $this->id_principio = $id_principio;
+    // /**
+    //  * Set the value of id_principio
+    //  */
+    // public function setIdPrincipio($id_principio): self
+    // {
+    //     $this->id_principio = $id_principio;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     /**
      * Get the value of justificativa

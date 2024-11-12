@@ -33,7 +33,6 @@ class CadastraQuestionarioPeloCoordenador
             "tb_questionario.*, 
             json_agg(json_build_object(
                 'descricao', tb_perguntas.descricao,
-                'id_principio', id_principio,
                 'justificativa', justificativa
             )) as perguntas",
             "inner join tb_perguntas on tb_questionario.id_questionario = tb_perguntas.id_questionario
@@ -41,6 +40,11 @@ class CadastraQuestionarioPeloCoordenador
             "tb_questionario.id_questionario",
             []
         )->fetchAll(PDO::FETCH_ASSOC);
+
+        if(!isset($dados[0]) and !isset($dados[1]))
+        {
+            throw new Exception("Ative pelo um checklist/questionário padrão!");
+        }
 
         $repositrioQuestionario = new RepositorioDeQuestionarioComPdo;
         $repositrioQuestionario->beginTransaction();
@@ -74,7 +78,7 @@ class CadastraQuestionarioPeloCoordenador
 
                     $obPergunta = new Perguntas;
                     $obPergunta->setDescricao($pergunta['descricao']);
-                    $obPergunta->setIdPrincipio($pergunta['id_principio']);
+                    // $obPergunta->setIdPrincipio($pergunta['id_principio']);
                     $obPergunta->setJustificativa($pergunta['justificativa']);
                     $obPergunta->setQuestionario($obQuestionario);
                     $repositrioQuestionario->cadastrarPerguntas($obPergunta);

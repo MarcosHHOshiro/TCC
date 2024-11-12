@@ -66,7 +66,8 @@ class CadastraQuestionarioPeloAdmin
 
         $obPergunta = new Perguntas;
         $obPergunta->setDescricao($postVars['perguntas'][0]['pergunta']);
-        $obPergunta->setIdPrincipio(empty($postVars['perguntas'][0]['principio'])? null : $postVars['perguntas'][0]['principio']);
+        $obPergunta->setJustificativa($postVars['perguntas'][0]['justificativa']);
+        // $obPergunta->setIdPrincipio(empty($postVars['perguntas'][0]['principio'])? null : $postVars['perguntas'][0]['principio']);
         $obPergunta->setQuestionario($obQuestionario);
         $repositrioQuestionario->cadastrarPerguntas($obPergunta);
 

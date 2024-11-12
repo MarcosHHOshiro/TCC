@@ -11,7 +11,7 @@ class UpdatePerguntaCadastrada
         $postVars = $request->getPostVars();
         $obPergunta = new Perguntas;
         $obPergunta->setDescricao($postVars['pergunta']);
-        $obPergunta->setIdPrincipio($postVars['principio']);
+        // $obPergunta->setIdPrincipio($postVars['principio']);
         $obPergunta->setJustificativa($postVars['justificativa']);
 
         $repositorio = new RepositorioDeQuestionarioComPdo();

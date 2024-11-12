@@ -41,7 +41,7 @@ class UrlPdo
         $this->db->setTable("tb_url");
         $urls = $this->db->selectJoinPersonalizavel(
             "id_usuario = ?",
-            "url, descricao, tipo_site, id_url as id, 
+            "url, descricao, tipo_site, id_url as id, data_inicio, data_fim,
             (select id_questionario as questionario from tb_questionario where tb_questionario.id_url = tb_url.id_url and tipo = 'Q'),
             (select id_questionario as checklist from tb_questionario where tb_questionario.id_url = tb_url.id_url and tipo = 'C')
             ",

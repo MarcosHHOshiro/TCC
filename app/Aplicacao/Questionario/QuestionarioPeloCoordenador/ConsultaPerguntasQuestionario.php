@@ -20,10 +20,8 @@ class ConsultaPerguntasQuestionario
         json_agg(json_build_object(
 	    'id_pergunta', tb_perguntas.id_pergunta, 
 	    'pergunta', tb_perguntas.descricao, 
-	    'justificativa', tb_perguntas.justificativa, 
-	    'principio', tb_principio.descricao)) as perguntas",
-            "INNER JOIN tb_perguntas ON tb_questionario.id_questionario = tb_perguntas.id_questionario
-        LEFT JOIN tb_principio ON tb_perguntas.id_principio = tb_principio.id_principio",
+	    'justificativa', tb_perguntas.justificativa)) as perguntas",
+            "INNER JOIN tb_perguntas ON tb_questionario.id_questionario = tb_perguntas.id_questionario",
             'tb_questionario.id_questionario',
             [$idQuestionario],
             null
