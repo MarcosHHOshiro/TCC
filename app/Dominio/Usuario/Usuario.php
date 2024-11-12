@@ -21,6 +21,8 @@ class Usuario
     private $status_usuario;
     private $permitido;
     private $permissao;
+    private $cidade;
+    private $estado;
 
     public function addTelefone()
     {
@@ -262,6 +264,42 @@ class Usuario
     public function setPermissao($permissao): self
     {
         $this->permissao = $permissao;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of cidade
+     */
+    public function getCidade()
+    {
+        return $this->cidade;
+    }
+
+    /**
+     * Set the value of cidade
+     */
+    public function setCidade($cidade): self
+    {
+        $this->cidade = $cidade;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of estado
+     */
+    public function getEstado()
+    {
+        return $this->estado;
+    }
+
+    /**
+     * Set the value of estado
+     */
+    public function setEstado($estado): self
+    {
+        $this->estado = $estado;
 
         return $this;
     }

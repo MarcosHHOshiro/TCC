@@ -14,22 +14,23 @@ class CadastraUsuario
     public function executa(Request $request)
     {
         $postVars = $request->getPostVars();
-     
-        if($postVars['permissao'] == "U"){
+
+        if ($postVars['permissao'] == "U") {
             $permissao = "U";
-        }else if($postVars['permissao'] == "C"){
+        } else if ($postVars['permissao'] == "C") {
             $permissao = "C";
-        }else{
+        } else {
             throw new Exception("Informe valores permitidos!");
         }
 
         $this->verificaSeJaExisteEsseUsuario($postVars['login']);
+        $viaCep = $this->buscaCidadeEstadoPeloCep($postVars['cep']);
 
         $obUsuario = new Usuario();
-        
-        $obProfissao= new Profissao();
+
+        $obProfissao = new Profissao();
         $obProfissao->setIdProfissao(empty($postVars["id_profissao"]) ? null : $postVars["id_profissao"]);
-        
+
         $obEscolaridade = new Escolaridade();
         $obEscolaridade->setIdEscolaridade(empty($postVars["id_escolaridade"]) ? null : $postVars["id_escolaridade"]);
 
@@ -45,6 +46,8 @@ class CadastraUsuario
         $obUsuario->setPermissao($permissao);
         $obUsuario->setPermitido('false');
         $obUsuario->setStatusUsuario($postVars["status_usuario"]);
+        $obUsuario->setCidade($viaCep['localidade']);
+        $obUsuario->setEstado($viaCep["estado"]);
 
         $useCase = new UsuarioPdo();
         return $useCase->cadastro($obUsuario);
@@ -57,10 +60,33 @@ class CadastraUsuario
         $repositorio->setTable("tb_usuario");
         $temUsuario = $repositorio->selectPadrao("login = ?", "1", null, null, [$nomeUsuario], null)->fetchColumn();
 
-        if(!empty($temUsuario)){
+        if (!empty($temUsuario)) {
             throw new Exception("Nome de usuário já utilizado!");
         }
 
         return;
+    }
+
+    private function buscaCidadeEstadoPeloCep($cep)
+    {
+        $url = "https://viacep.com.br/ws/$cep/json/";
+
+        if(empty($cep))
+        {
+            throw new Exception("Informe o cep!", 400);
+        }
+
+        // Faz a requisição e obtém o conteúdo JSON
+        $response = file_get_contents($url);
+
+        // Converte o JSON em um array associativo
+        $endereco = json_decode($response, true);
+
+        // Verifica se a consulta foi bem-sucedida e imprime o resultado
+        if (isset($endereco['erro']) && $endereco['erro'] === true) {
+            throw new Exception( "CEP não encontrado.");
+        } else {
+            return $endereco;  
+        }
     }
 }

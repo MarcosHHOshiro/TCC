@@ -37,6 +37,8 @@ class UsuarioPdo
             'permitido' => $obUsuario->getPermitido(),
             'permissao' => $obUsuario->getPermissao(),
             'status_usuario' => $obUsuario->getStatusUsuario(),
+            'estado' => $obUsuario->getEstado(),
+            'cidade' => $obUsuario->getCidade(),
         ]);
 
         return $id_historico;

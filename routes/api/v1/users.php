@@ -199,7 +199,7 @@ $obRouter->post('/api/v1/users/admin/cadastraUser', [
         'A',
     ],
     'middlewares' => [
-        'jwt-auth'
+        // 'jwt-auth'
         // 'cache'  
     ],
     function ($request)
