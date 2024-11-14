@@ -61,7 +61,7 @@ class CadastraQuestionarioPeloCoordenador
 
                 $obQuestionario->setTitulo($dado['titulo']);
                 $obQuestionario->setDescricao($dado['descricao']);
-                $obQuestionario->setPadrao('false');
+                $obQuestionario->setPadrao(0);
                 $obQuestionario->setDataInicio($data);
                 $obQuestionario->setTipo($dado['tipo']);
                 $obQuestionario->setDataFim(empty($dado['data_fim']) ? null : $dado['data_fim']);

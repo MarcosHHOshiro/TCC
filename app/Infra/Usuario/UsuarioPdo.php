@@ -11,9 +11,9 @@ class UsuarioPdo
 {
     private $db;
 
-    public function __construct()
+    public function __construct(DataBase $db = null)
     {
-        $this->db = new DataBase;
+        $this->db = $db ?? new DataBase;
     }
 
     public function setTable(string $table)

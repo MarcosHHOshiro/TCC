@@ -16,7 +16,7 @@ class CadastraPerguntaQuestionarioPeloCoordenador
         $repositorio = new RepositorioDeQuestionarioComPdo();
         $obQuestionario = new Questionario;
 
-        $idUsuario = $repositorio->pegaIdUsuarioLogado($headers);
+        $idUsuario = $repositorio->pegaIdUsuarioLogado($headers);   
         $this->verificaSeOUsuarioPodeAdicionarUmaPergunta($postVars['id_questionario'], $idUsuario);
 
         $obPergunta = new Perguntas;

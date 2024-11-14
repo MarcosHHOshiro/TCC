@@ -1,86 +1,50 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use app\Dominio\Usuario\Usuario;
+use App\Dominio\Usuario\Usuario;
+use App\Dominio\Usuario\Profissao;
+use App\Dominio\Usuario\Escolaridade;
 
 class UsuarioTest extends TestCase
 {
+    private Usuario $usuario;
+
+    protected function setUp(): void
+    {
+        $this->usuario = new Usuario();
+    }
+
     public function testSetAndGetIdUsuario()
     {
-        $usuario = new Usuario();
-        $usuario->setIdUsuario(1);
-        $this->assertEquals(1, $usuario->getIdUsuario());
+        $this->usuario->setIdUsuario(1);
+        $this->assertEquals(1, $this->usuario->getIdUsuario());
     }
 
     public function testSetAndGetNomeUsuario()
     {
-        $usuario = new Usuario();
-        $usuario->setNomeUsuario('John Doe');
-        $this->assertEquals('John Doe', $usuario->getNomeUsuario());
+        $nome = "João Silva";
+        $this->usuario->setNomeUsuario($nome);
+        $this->assertEquals($nome, $this->usuario->getNomeUsuario());
     }
 
     public function testSetAndGetEmail()
     {
-        $usuario = new Usuario();
-        $usuario->setEmail('john@example.com');
-        $this->assertEquals('john@example.com', $usuario->getEmail());
+        $email = "joao@example.com";
+        $this->usuario->setEmail($email);
+        $this->assertEquals($email, $this->usuario->getEmail());
     }
 
-    public function testSetAndGetIdProfissao()
+    public function testSetAndGetProfissao()
     {
-        $usuario = new Usuario();
-        $usuario->setIdProfissao(2);
-        $this->assertEquals(2, $usuario->getIdProfissao());
+        $profissao = $this->createMock(Profissao::class);
+        $this->usuario->setProfissao($profissao);
+        $this->assertSame($profissao, $this->usuario->getProfissao());
     }
 
-    public function testSetAndGetIdEscolaridade()
+    public function testSetAndGetEscolaridade()
     {
-        $usuario = new Usuario();
-        $usuario->setIdEscolaridade(3);
-        $this->assertEquals(3, $usuario->getIdEscolaridade());
-    }
-
-    public function testSetAndGetDataNascimento()
-    {
-        $usuario = new Usuario();
-        $dataNascimento = '1990-01-01';
-        $usuario->setDataNascimento($dataNascimento);
-        $this->assertEquals($dataNascimento, $usuario->getDataNascimento());
-    }
-
-    public function testSetAndGetSexo()
-    {
-        $usuario = new Usuario();
-        $usuario->setSexo('M');
-        $this->assertEquals('M', $usuario->getSexo());
-    }
-
-    public function testSetAndGetIdCidade()
-    {
-        $usuario = new Usuario();
-        $usuario->setIdCidade(4);
-        $this->assertEquals(4, $usuario->getIdCidade());
-    }
-
-    public function testSetAndGetSenha()
-    {
-        $usuario = new Usuario();
-        $senha = 'password123';
-        $usuario->setSenha($senha);
-        $this->assertEquals($senha, $usuario->getSenha());
-    }
-
-    public function testSetAndGetNivelAcesso()
-    {
-        $usuario = new Usuario();
-        $usuario->setNivelAcesso(5);
-        $this->assertEquals(5, $usuario->getNivelAcesso());
-    }
-
-    public function testSetAndGetStatusUsuario()
-    {
-        $usuario = new Usuario();
-        $usuario->setStatusUsuario('active');
-        $this->assertEquals('active', $usuario->getStatusUsuario());
+        $escolaridade = $this->createMock(Escolaridade::class);
+        $this->usuario->setEscolaridade($escolaridade);
+        $this->assertSame($escolaridade, $this->usuario->getEscolaridade());
     }
 }

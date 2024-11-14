@@ -23,6 +23,8 @@ class ConsultaUrlQueOUsuarioTemAcesso
         from tb_url
             inner join rl_acesso_questionario on rl_acesso_questionario.id_url = tb_url.id_url
             where rl_acesso_questionario.id_usuario = ?
+            AND data_inicio <= CURRENT_DATE
+            AND (data_fim IS NULL OR data_fim >= CURRENT_DATE)
         order by tb_url.id_url", [$idUsuario])->fetchAll(PDO::FETCH_ASSOC);
 
         if (empty($dados)) {

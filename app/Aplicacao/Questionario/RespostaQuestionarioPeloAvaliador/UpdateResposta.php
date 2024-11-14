@@ -14,7 +14,8 @@ class UpdateResposta
         $repositorioGeral->setTable('tb_resposta');
         $repositorioGeral->updatePadrao('id_pergunta = ?', 
         [
-            'resposta' => $postvars['resposta']
+            'resposta' => $postvars['resposta'],
+            'descricao' => $postvars['resposta_descricao']
         ], [$idPergunta]);
 
         return

@@ -15,8 +15,8 @@ class ConsultaTodasAsPErguntasAposResponder
         $idUsuarioLogado = $repositorioGeral->pegaIdUsuarioLogado($headers);
         $dados = $repositorioGeral->selectQueryCompleta("SELECT tb_questionario.id_questionario,
                 json_agg(json_build_object(
-                    'id_perguntas', tb_perguntas.id_pergunta,
-                	'pergunta', tb_perguntas.descricao,
+                    'id_pergunta', tb_perguntas.id_pergunta,
+                	'descricao', tb_perguntas.descricao,
                 	'justificativa', justificativa,	
                 	'descricao_resposta', tb_resposta.descricao,
                 	'resposta', resposta
