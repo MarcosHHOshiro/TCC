@@ -13,6 +13,6 @@ class ConsultaUsuario
         $postVars = $request->getPostVars();
 
         $useCase = new UsuarioPdo();
-        return $useCase->consulta();
+        return $useCase->consulta($request);
     }
 }

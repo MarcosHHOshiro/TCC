@@ -12,7 +12,7 @@ class ConsultaResultadosQUestionariosPelasPerguntas
         $repositorioGeral = new RepositorioDeQuestionarioComPdo;
 
         $dados = $repositorioGeral->selectQueryCompleta("SELECT tb_perguntas.id_pergunta, 
-        count(tb_resposta.id_resposta) as quantidade, resposta
+        count(tb_resposta.id_resposta) as quantidade, resposta, tb_perguntas.descricao as pergunta
             from tb_questionario
             inner join tb_perguntas on tb_questionario.id_questionario = tb_perguntas.id_questionario
             inner join tb_resposta on tb_perguntas.id_pergunta = tb_resposta.id_pergunta
@@ -22,6 +22,10 @@ class ConsultaResultadosQUestionariosPelasPerguntas
         // echo"<pre>";
         // print_r($dados);exit;
         $total_respostas = array_sum(array_column($dados, 'quantidade'));
+
+        if(empty($dados)){
+            throw new \Exception("Sem cadastro para essa consulta!");
+        }
 
         // Cria um array para somar o total de cada resposta
         $resposta_counts = [];
@@ -65,6 +69,7 @@ class ConsultaResultadosQUestionariosPelasPerguntas
             if (!$encontrou) {
                 $resultado[] = [
                     'id_pergunta' => $id_pergunta,
+                    'pergunta' => $item['pergunta'],
                     'respostas' => [$resposta_data],
                 ];
             }

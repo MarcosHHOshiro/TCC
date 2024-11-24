@@ -9,7 +9,6 @@ class ConsultaPerguntasQuestionario
 {
     public function executa($request, $idQuestionario)
     {
-        $queryParams = $request->getQueryParams();
 
         $repositorio = new RepositorioDeQuestionarioComPdo();
 

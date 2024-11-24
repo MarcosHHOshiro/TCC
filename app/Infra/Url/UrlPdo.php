@@ -38,16 +38,42 @@ class UrlPdo
         $header = $request->getHeaders();
         $idUsuario = $this->pegaIdUsuarioLogado($header);
 
+        $queryParams = $request->getQueryParams();
+
+        $stringWhere = '';
+        $valores = [];
+
+        if (!empty($queryParams['url'])) {
+            $stringWhere .= " url LIKE ? AND";
+            array_push($valores, "%{$queryParams['url']}%");
+        }
+
+        if (!empty($queryParams['data_inicio'])) {
+            $stringWhere .= " data_inicio >= ? AND";
+            array_push($valores, "{$queryParams['data_inicio']}");
+        }
+        
+        if (!empty($queryParams['data_fim'])) {
+            $stringWhere .= " data_fim <= ? AND";
+            array_push($valores, "{$queryParams['data_fim']}");
+        }
+
+        $stringWhere = $stringWhere . ' id_usuario = ? and';
+        array_push($valores, "{$idUsuario}");
+
+        $last_space = strrpos($stringWhere, " ");
+        $stringWhere = substr($stringWhere, 0, $last_space);
+
         $this->db->setTable("tb_url");
         $urls = $this->db->selectJoinPersonalizavel(
-            "id_usuario = ?",
+            $stringWhere,
             "url, descricao, tipo_site, id_url as id, data_inicio, data_fim,
             (select id_questionario as questionario from tb_questionario where tb_questionario.id_url = tb_url.id_url and tipo = 'Q'),
             (select id_questionario as checklist from tb_questionario where tb_questionario.id_url = tb_url.id_url and tipo = 'C')
             ",
             null,
             null,
-            [$idUsuario],
+            $valores,
             null
         )->fetchAll(PDO::FETCH_ASSOC);
 
@@ -65,7 +91,9 @@ class UrlPdo
         $depositoArray = [
             'url' => $url->getUrl(),
             'descricao' => $url->getDescricao(),
-            'tipo_site' => $url->getTipoSite()
+            'tipo_site' => $url->getTipoSite(),
+            'data_inicio' => $url->getDataInicio(),
+            'data_fim' => $url->getDataFim()
         ];
 
         return $this->db->update2("id_url = ?", $depositoArray, [$url->getIdUrl()]);

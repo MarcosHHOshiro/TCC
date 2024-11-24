@@ -20,6 +20,8 @@ class UpdateUrl
         $obUrl->setUrl($postVars['url']);
         $obUrl->setDescricao($postVars['descricao']);
         $obUrl->setTipoSite($postVars['tipo_site']);
+        $obUrl->setDataInicio($postVars[ 'data_inicio']);
+        $obUrl->setDataFim($postVars['data_fim']);
 
         $useCase = new UrlPdo();
         return $useCase->update($obUrl);
