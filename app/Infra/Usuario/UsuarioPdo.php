@@ -111,7 +111,7 @@ class UsuarioPdo
         $usuarios = $this->db->selectJoinPersonalizavel(
             $stringWhere,
             "id_usuario, nome_usuario, email, data_nascimento, sexo, login, status_usuario, 
-            id_profissao, id_escolaridade, id_cidade, permissao, cidade, estado, cep    ",
+            id_profissao, id_escolaridade, id_cidade, permissao, cidade, estado",
             null,
             null,
             $valores,

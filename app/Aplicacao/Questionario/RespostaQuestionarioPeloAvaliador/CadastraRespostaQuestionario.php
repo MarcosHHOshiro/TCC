@@ -23,20 +23,20 @@ class CadastraRespostaQuestionario
             $repositorioGeral->setTable('rl_acesso_questionario');
             if ($dadosQTD['tipo'] == "Q") {
                 $repositorioGeral->updatePadrao(
-                    "id_url = ?",
+                    "id_url = ? and id_usuario = ?",
                     [
                         'respondeu_questionario' => 'true'
                     ],
-                    [$dadosQTD['id_url']]
+                    [$dadosQTD['id_url'], $idUsuario]
                 );
             }
             if ($dadosQTD['tipo'] == "C") {
                 $repositorioGeral->updatePadrao(
-                    "id_url = ?",
+                    "id_url = ? and id_usuario = ?",
                     [
                         'respondeu_checklist' => 'true'
                     ],
-                    [$dadosQTD['id_url']]
+                    [$dadosQTD['id_url'], $idUsuario]
                 );
             }
         }
