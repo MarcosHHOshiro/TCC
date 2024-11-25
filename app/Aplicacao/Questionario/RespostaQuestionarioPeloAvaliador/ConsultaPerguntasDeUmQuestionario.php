@@ -11,13 +11,13 @@ class ConsultaPerguntasDeUmQuestionario
     public function executa($request, $idQuestionario)
     {
         $repositorioGeral = new RepositorioDeQuestionarioComPdo();
-
-        // $idUsuario = $repositorioGeral->pegaIdUsuarioLogado($headers);
+        $headers = $request->getHeaders();
+        $idUsuario = $repositorioGeral->pegaIdUsuarioLogado($headers);
 
         $repositorioGeral->setTable("tb_perguntas");
         $questionarios = $repositorioGeral->selectPadrao("tb_perguntas.id_questionario = ?",
-        "tb_perguntas.id_pergunta, tb_perguntas.descricao, justificativa, id_resposta", 
-        "left join tb_resposta on tb_perguntas.id_pergunta = tb_resposta.id_pergunta",
+        "tb_perguntas.id_pergunta, tb_perguntas.descricao, justificativa", 
+        null,
         null, [$idQuestionario], null)->fetchAll(PDO::FETCH_ASSOC);
 
         if(empty($questionarios))
@@ -27,11 +27,17 @@ class ConsultaPerguntasDeUmQuestionario
 
         foreach($questionarios as &$questionario)
         {
-            if(!empty($questionario['id_resposta']))
+            $repositorioGeral->setTable("tb_resposta");
+            $usuarioRespondeu = $repositorioGeral->selectPadrao("tb_resposta.id_pergunta = ? and tb_resposta.id_usuario = ?",
+            "*", 
+            null,
+            null, [$questionario['id_pergunta'], $idUsuario], null)->fetchColumn();
+
+            if(empty($usuarioRespondeu))
             {
-                $questionario['respondido'] = 1; 
-            }else{
                 $questionario['respondido'] = 0; 
+            }else{
+                $questionario['respondido'] = 1; 
             }
         }
 
